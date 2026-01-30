@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Browser Bridge - Install Bookmarklet</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 { color: #1a1a2e; }
+    .bookmarklet-link {
+      display: inline-block;
+      background: #635bff;
+      color: white;
+      padding: 16px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 18px;
+      margin: 20px 0;
+      cursor: grab;
+    }
+    .bookmarklet-link:hover {
+      background: #5046e5;
+    }
+    .instructions {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    code {
+      background: #e5e7eb;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .manual-code {
+      background: #1a1a2e;
+      color: #10b981;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 13px;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔍 Browser Bridge</h1>
+  <p>Capture elements from your browser and send them to Claude Code.</p>
+
+  <a class="bookmarklet-link" href="javascript:(function(){var s=document.createElement('script');s.src='http://localhost:3456/inject.js';document.body.appendChild(s);})();">
+    ⭐ Browser Bridge
+  </a>
+
+  <div class="instructions">
+    <h3>Installation for Arc Browser:</h3>
+    <ol>
+      <li><strong>Drag the purple button above</strong> to your Arc sidebar (pinned tabs area)</li>
+      <li>Or right-click the button → "Add to Favorites"</li>
+    </ol>
+
+    <h3>Alternative - Manual Setup:</h3>
+    <ol>
+      <li>Press <code>⌘+D</code> on any page to add a bookmark</li>
+      <li>Name it "Browser Bridge"</li>
+      <li>Replace the URL with this code:</li>
+    </ol>
+    <pre class="manual-code">javascript:(function(){var s=document.createElement('script');s.src='http://localhost:3456/inject.js';document.body.appendChild(s);})();</pre>
+
+    <h3>Usage:</h3>
+    <ol>
+      <li>Click the bookmarklet on any webpage</li>
+      <li>Click elements to capture them</li>
+      <li>Add instructions in the dialog</li>
+      <li>Ask Claude Code about your captures</li>
+    </ol>
+  </div>
+</body>
+</html>
