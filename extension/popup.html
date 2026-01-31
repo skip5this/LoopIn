@@ -40,6 +40,59 @@
       padding: 16px 20px;
     }
 
+    /* Mode Tabs */
+    .mode-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+      background: #09090b;
+      padding: 4px;
+      border-radius: 10px;
+    }
+
+    .mode-tab {
+      flex: 1;
+      padding: 10px 8px;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: transparent;
+      color: #71717a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .mode-tab:hover {
+      color: #a1a1aa;
+    }
+
+    .mode-tab.active {
+      background: #27272a;
+      color: #fafafa;
+    }
+
+    .mode-tab.active.capture {
+      background: #635bff;
+    }
+
+    .mode-tab.active.a11y {
+      background: #f59e0b;
+      color: #000;
+    }
+
+    .mode-tab.active.watch {
+      background: #10b981;
+    }
+
+    .mode-tab-icon {
+      font-size: 16px;
+    }
+
     .status-card {
       background: #27272a;
       border-radius: 12px;
@@ -111,6 +164,24 @@
       background: #7c73ff;
     }
 
+    .btn-a11y {
+      background: #f59e0b;
+      color: #000;
+    }
+
+    .btn-a11y:hover {
+      background: #fbbf24;
+    }
+
+    .btn-watch {
+      background: #10b981;
+      color: white;
+    }
+
+    .btn-watch:hover {
+      background: #34d399;
+    }
+
     .btn-secondary {
       background: #27272a;
       color: #d4d4d8;
@@ -130,6 +201,20 @@
       height: 1px;
       background: #27272a;
       margin: 16px 0;
+    }
+
+    .mode-description {
+      background: #09090b;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 12px;
+      color: #a1a1aa;
+      line-height: 1.5;
+    }
+
+    .mode-description strong {
+      color: #fafafa;
     }
 
     .settings-section h3 {
@@ -176,33 +261,37 @@
       background: #3f3f46;
     }
 
-    .stats {
+    /* A11y Stats */
+    .a11y-stats {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 16px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
     }
 
-    .stat-card {
+    .a11y-stat {
       background: #27272a;
-      border-radius: 10px;
-      padding: 12px;
+      border-radius: 8px;
+      padding: 10px 8px;
       text-align: center;
     }
 
-    .stat-value {
-      font-size: 24px;
+    .a11y-stat-value {
+      font-size: 18px;
       font-weight: 600;
-      color: #fafafa;
     }
 
-    .stat-label {
-      font-size: 11px;
+    .a11y-stat-label {
+      font-size: 9px;
       color: #71717a;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-top: 4px;
+      margin-top: 2px;
     }
+
+    .a11y-stat.critical .a11y-stat-value { color: #ef4444; }
+    .a11y-stat.serious .a11y-stat-value { color: #f97316; }
+    .a11y-stat.moderate .a11y-stat-value { color: #f59e0b; }
+    .a11y-stat.minor .a11y-stat-value { color: #3b82f6; }
 
     .footer {
       padding: 12px 20px;
@@ -231,6 +320,10 @@
       font-family: 'SF Mono', Monaco, monospace;
       color: #a1a1aa;
     }
+
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -243,35 +336,110 @@
   </div>
 
   <div class="content">
-    <div class="status-card">
-      <div class="status-row">
-        <span class="status-label">Capture Mode</span>
-        <span class="status-value">
-          <span class="status-dot" id="capture-dot"></span>
-          <span id="capture-status">Off</span>
-        </span>
-      </div>
+    <!-- Mode Tabs -->
+    <div class="mode-tabs">
+      <button class="mode-tab capture active" data-mode="capture">
+        <span class="mode-tab-icon">🔵</span>
+        <span>Capture</span>
+      </button>
+      <button class="mode-tab a11y" data-mode="a11y">
+        <span class="mode-tab-icon">🟡</span>
+        <span>A11y</span>
+      </button>
+      <button class="mode-tab watch" data-mode="watch">
+        <span class="mode-tab-icon">🟢</span>
+        <span>Watch</span>
+      </button>
     </div>
 
-    <button class="btn btn-primary" id="toggle-btn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"/>
-        <circle cx="12" cy="12" r="3"/>
-      </svg>
-      Enable Capture Mode
-    </button>
+    <!-- Capture Mode Panel -->
+    <div id="capture-panel" class="mode-panel">
+      <div class="mode-description">
+        <strong>Capture Mode:</strong> Click any element to capture it and send to Claude Code with instructions.
+      </div>
 
-    <div class="status-card" style="margin-top: 12px;">
+      <div class="status-card">
+        <div class="status-row">
+          <span class="status-label">Status</span>
+          <span class="status-value">
+            <span class="status-dot" id="capture-dot"></span>
+            <span id="capture-status">Off</span>
+          </span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="toggle-capture-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        Enable Capture Mode
+      </button>
+    </div>
+
+    <!-- A11y Mode Panel -->
+    <div id="a11y-panel" class="mode-panel hidden">
+      <div class="mode-description">
+        <strong>A11y Mode:</strong> Scan page for accessibility issues. Click badges to see details and fixes.
+      </div>
+
+      <div class="a11y-stats">
+        <div class="a11y-stat critical">
+          <div class="a11y-stat-value" id="critical-count">-</div>
+          <div class="a11y-stat-label">Critical</div>
+        </div>
+        <div class="a11y-stat serious">
+          <div class="a11y-stat-value" id="serious-count">-</div>
+          <div class="a11y-stat-label">Serious</div>
+        </div>
+        <div class="a11y-stat moderate">
+          <div class="a11y-stat-value" id="moderate-count">-</div>
+          <div class="a11y-stat-label">Moderate</div>
+        </div>
+        <div class="a11y-stat minor">
+          <div class="a11y-stat-value" id="minor-count">-</div>
+          <div class="a11y-stat-label">Minor</div>
+        </div>
+      </div>
+
+      <button class="btn btn-a11y" id="toggle-a11y-btn">
+        🔍 Run A11y Scan
+      </button>
+    </div>
+
+    <!-- Watch Mode Panel -->
+    <div id="watch-panel" class="mode-panel hidden">
+      <div class="mode-description">
+        <strong>Watch Mode:</strong> Continuously monitors the page for accessibility issues as you work. Get notified when problems appear.
+      </div>
+
+      <div class="status-card">
+        <div class="status-row">
+          <span class="status-label">Monitoring</span>
+          <span class="status-value">
+            <span class="status-dot" id="watch-dot"></span>
+            <span id="watch-status">Off</span>
+          </span>
+        </div>
+      </div>
+
+      <button class="btn btn-watch" id="toggle-watch-btn">
+        👁️ Start Watching
+      </button>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Server Status -->
+    <div class="status-card">
       <div class="status-row">
-        <span class="status-label">Server Status</span>
+        <span class="status-label">Server</span>
         <span class="status-value">
           <span class="status-dot" id="server-dot"></span>
           <span id="server-status">Checking...</span>
         </span>
       </div>
     </div>
-
-    <div class="divider"></div>
 
     <div class="settings-section">
       <h3>Server URL</h3>
@@ -280,22 +448,11 @@
         <button id="save-server">Save</button>
       </div>
     </div>
-
-    <div class="stats" id="stats-section" style="display: none;">
-      <div class="stat-card">
-        <div class="stat-value" id="captures-count">0</div>
-        <div class="stat-label">Captures</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="tasks-count">0</div>
-        <div class="stat-label">Tasks</div>
-      </div>
-    </div>
   </div>
 
   <div class="footer">
-    <a href="https://github.com/skip5this/LoopIn" target="_blank">GitHub</a>
-    <span class="shortcut">Ctrl+Shift+C</span>
+    <a href="https://github.com/skip5this/browser-bridge" target="_blank">GitHub</a>
+    <span class="shortcut">⌘⇧C</span>
   </div>
 
   <script src="popup.js"></script>
