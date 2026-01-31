@@ -59,6 +59,30 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
 
+// Serve install page at root
+app.get("/", (_req: Request, res: Response) => {
+  try {
+    const possiblePaths = [
+      join(__dirname, "..", "bookmarklet", "install.html"),
+      join(__dirname, "..", "..", "bookmarklet", "install.html"),
+    ];
+
+    for (const p of possiblePaths) {
+      try {
+        const html = readFileSync(p, "utf-8");
+        res.type("text/html").send(html);
+        return;
+      } catch {
+        continue;
+      }
+    }
+
+    res.status(404).send("install.html not found");
+  } catch (e) {
+    res.status(500).send("Error loading install.html");
+  }
+});
+
 // Health check
 app.get("/health", (_req: Request, res: Response) => {
   res.json({

@@ -5,7 +5,7 @@
     return;
   }
 
-  const CAPTURE_SERVER = 'http://localhost:3456';
+  const CAPTURE_SERVER = 'http://192.168.4.56:3456';
 
   // ============================================
   // State
