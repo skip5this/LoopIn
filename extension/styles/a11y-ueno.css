@@ -1,0 +1,182 @@
+/* ============================================
+   A11y Panel - Ueno Style
+   Inspired by: ueno.co
+   
+   Vibe: Clean, minimal, confident
+   - Lots of white space
+   - Simple black and white
+   - Subtle details
+   - Let content breathe
+   ============================================ */
+
+.panel-ueno {
+  width: 380px;
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.panel-ueno .panel-header {
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.panel-ueno .panel-title {
+  font-size: 14px;
+  font-weight: 400;
+  color: #000000;
+  margin-bottom: 4px;
+}
+
+.panel-ueno .panel-subtitle {
+  font-size: 13px;
+  color: #888888;
+}
+
+.panel-ueno .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: #888888;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.panel-ueno .close-btn:hover {
+  color: #000000;
+}
+
+.panel-ueno .panel-body {
+  padding: 24px 28px;
+}
+
+.panel-ueno .violation-card {
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.panel-ueno .violation-card:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.panel-ueno .violation-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.panel-ueno .severity-badge {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.panel-ueno .severity-badge.critical {
+  color: #e53935;
+}
+
+.panel-ueno .severity-badge.serious {
+  color: #fb8c00;
+}
+
+.panel-ueno .severity-badge.moderate {
+  color: #fdd835;
+}
+
+.panel-ueno .severity-badge.minor {
+  color: #888888;
+}
+
+.panel-ueno .severity-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.panel-ueno .violation-id {
+  font-size: 11px;
+  color: #cccccc;
+}
+
+.panel-ueno .violation-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: #000000;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.panel-ueno .violation-description {
+  font-size: 14px;
+  color: #666666;
+  line-height: 1.6;
+}
+
+.panel-ueno .fix-section {
+  margin-top: 16px;
+  padding-left: 16px;
+  border-left: 2px solid #f0f0f0;
+}
+
+.panel-ueno .fix-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888888;
+  margin-bottom: 6px;
+}
+
+.panel-ueno .fix-text {
+  font-size: 13px;
+  color: #444444;
+  line-height: 1.6;
+}
+
+.panel-ueno .learn-link {
+  font-size: 13px;
+  color: #000000;
+  text-decoration: underline;
+  text-decoration-color: #cccccc;
+  text-underline-offset: 3px;
+  margin-top: 12px;
+  display: inline-block;
+}
+
+.panel-ueno .learn-link:hover {
+  text-decoration-color: #000000;
+}
+
+.panel-ueno .panel-footer {
+  padding: 20px 28px;
+  background: #fafafa;
+}
+
+.panel-ueno .send-btn {
+  width: 100%;
+  padding: 14px 24px;
+  background: #000000;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.panel-ueno .send-btn:hover {
+  background: #333333;
+}

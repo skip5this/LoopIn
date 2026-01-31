@@ -2,39 +2,44 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>A11y Panel Style Explorations</title>
+  <title>A11y Panel — 5 Style Explorations</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #1a1a1a;
+      background: #0f0f0f;
       min-height: 100vh;
-      padding: 40px;
+      padding: 40px 20px;
     }
     
     .header {
       text-align: center;
       margin-bottom: 48px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
     
     .header h1 {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 600;
       color: #fff;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
     
     .header p {
-      font-size: 14px;
-      color: #888;
+      font-size: 15px;
+      color: #666;
+      line-height: 1.6;
     }
     
-    .comparison {
-      display: flex;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
       gap: 48px;
-      justify-content: center;
-      flex-wrap: wrap;
+      max-width: 1600px;
+      margin: 0 auto;
     }
     
     .style-card {
@@ -57,20 +62,28 @@
     
     .style-label p {
       font-size: 12px;
-      color: #666;
+      color: #555;
+    }
+    
+    .style-label a {
+      font-size: 11px;
+      color: #444;
+      text-decoration: none;
+    }
+    
+    .style-label a:hover {
+      color: #888;
     }
 
     /* ============================================
-       MetaLab Style
+       1. MetaLab - Dark, Elegant, Premium
        ============================================ */
     
     .panel-metalab {
       width: 360px;
       background: #0a0a0f;
       border-radius: 16px;
-      box-shadow: 
-        0 24px 48px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.06);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.06);
       overflow: hidden;
     }
     
@@ -79,403 +92,287 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       padding: 20px 24px;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
     }
     
-    .panel-metalab .panel-title-group {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .panel-metalab .panel-title {
-      font-family: 'Georgia', serif;
-      font-size: 15px;
-      font-weight: 400;
-      color: #fafafa;
-    }
-    
-    .panel-metalab .panel-subtitle {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.4);
-      margin-top: 2px;
-    }
-    
-    .panel-metalab .close-btn {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      color: rgba(255, 255, 255, 0.4);
-      font-size: 14px;
-      cursor: pointer;
-    }
-    
-    .panel-metalab .panel-body {
-      padding: 16px 24px;
-    }
-    
-    .panel-metalab .violation-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 12px;
-    }
-    
-    .panel-metalab .violation-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    
-    .panel-metalab .severity-badge {
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      background: rgba(239, 68, 68, 0.15);
-      color: #f87171;
-      border: 1px solid rgba(239, 68, 68, 0.2);
-    }
-    
-    .panel-metalab .severity-badge.serious {
-      background: rgba(249, 115, 22, 0.15);
-      color: #fb923c;
-      border: 1px solid rgba(249, 115, 22, 0.2);
-    }
-    
-    .panel-metalab .violation-id {
-      font-family: 'SF Mono', Monaco, monospace;
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.3);
-    }
-    
-    .panel-metalab .violation-title {
-      font-family: 'Georgia', serif;
-      font-size: 14px;
-      color: #fafafa;
-      margin-bottom: 6px;
-    }
-    
-    .panel-metalab .violation-description {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.5);
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-    
-    .panel-metalab .fix-section {
-      background: rgba(99, 102, 241, 0.06);
-      border: 1px solid rgba(99, 102, 241, 0.1);
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 12px;
-    }
-    
-    .panel-metalab .fix-label {
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: rgba(165, 180, 252, 0.8);
-      margin-bottom: 6px;
-    }
-    
-    .panel-metalab .fix-text {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.5;
-    }
-    
-    .panel-metalab .learn-link {
-      font-size: 12px;
-      color: #818cf8;
-      text-decoration: none;
-    }
-    
-    .panel-metalab .panel-footer {
-      padding: 16px 24px;
-      background: rgba(255, 255, 255, 0.02);
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
-    }
-    
-    .panel-metalab .send-btn {
-      width: 100%;
-      padding: 12px 20px;
-      background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
-      border: none;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 500;
-      color: white;
-      cursor: pointer;
-    }
+    .panel-metalab .panel-title { font-family: 'Georgia', serif; font-size: 15px; color: #fafafa; }
+    .panel-metalab .panel-subtitle { font-size: 12px; color: rgba(255, 255, 255, 0.4); margin-top: 2px; }
+    .panel-metalab .close-btn { width: 28px; height: 28px; border-radius: 8px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.06); color: rgba(255, 255, 255, 0.4); font-size: 14px; cursor: pointer; }
+    .panel-metalab .panel-body { padding: 16px 24px; }
+    .panel-metalab .violation-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+    .panel-metalab .violation-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .panel-metalab .severity-badge { padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; text-transform: uppercase; background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+    .panel-metalab .severity-badge.serious { background: rgba(249, 115, 22, 0.15); color: #fb923c; border-color: rgba(249, 115, 22, 0.2); }
+    .panel-metalab .violation-id { font-family: monospace; font-size: 11px; color: rgba(255, 255, 255, 0.3); }
+    .panel-metalab .violation-title { font-family: 'Georgia', serif; font-size: 14px; color: #fafafa; margin-bottom: 6px; }
+    .panel-metalab .violation-description { font-size: 13px; color: rgba(255, 255, 255, 0.5); line-height: 1.5; }
+    .panel-metalab .fix-section { background: rgba(99, 102, 241, 0.06); border: 1px solid rgba(99, 102, 241, 0.1); border-radius: 8px; padding: 12px; margin: 12px 0; }
+    .panel-metalab .fix-label { font-size: 10px; font-weight: 600; text-transform: uppercase; color: rgba(165, 180, 252, 0.8); margin-bottom: 6px; }
+    .panel-metalab .fix-text { font-size: 12px; color: rgba(255, 255, 255, 0.7); line-height: 1.5; }
+    .panel-metalab .learn-link { font-size: 12px; color: #818cf8; text-decoration: none; }
+    .panel-metalab .panel-footer { padding: 16px 24px; background: rgba(255, 255, 255, 0.02); border-top: 1px solid rgba(255, 255, 255, 0.04); }
+    .panel-metalab .send-btn { width: 100%; padding: 12px; background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%); border: none; border-radius: 10px; font-size: 13px; font-weight: 500; color: white; cursor: pointer; }
 
     /* ============================================
-       Locomotive Style
+       2. Locomotive - Bold, Sharp, High Contrast
        ============================================ */
     
     .panel-locomotive {
       width: 340px;
       background: #ffffff;
       border-radius: 0;
-      box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.15),
-        0 0 0 1px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
       overflow: hidden;
     }
     
-    .panel-locomotive .panel-header {
-      background: #000000;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .panel-locomotive .panel-header { background: #000000; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .panel-locomotive .panel-title { font-size: 12px; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 0.1em; }
+    .panel-locomotive .issue-count { background: #ff4d00; color: #000; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; margin-left: 10px; }
+    .panel-locomotive .close-btn { width: 24px; height: 24px; border-radius: 0; background: transparent; border: 1px solid rgba(255, 255, 255, 0.3); color: #ffffff; font-size: 12px; cursor: pointer; }
+    .panel-locomotive .panel-body { padding: 0; }
+    .panel-locomotive .violation-card { background: #ffffff; border-bottom: 1px solid #e5e5e5; padding: 16px 20px; }
+    .panel-locomotive .violation-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .panel-locomotive .severity-badge { padding: 3px 8px; border-radius: 0; font-size: 9px; font-weight: 800; text-transform: uppercase; background: #ff0000; color: #ffffff; }
+    .panel-locomotive .severity-badge.serious { background: #ff4d00; color: #000000; }
+    .panel-locomotive .violation-id { font-family: monospace; font-size: 10px; color: #999999; text-transform: uppercase; }
+    .panel-locomotive .violation-title { font-size: 14px; font-weight: 600; color: #000000; margin-bottom: 4px; }
+    .panel-locomotive .violation-description { font-size: 12px; color: #666666; line-height: 1.5; }
+    .panel-locomotive .fix-section { background: #f5f5f5; border-left: 3px solid #000000; padding: 10px 12px; margin-top: 10px; }
+    .panel-locomotive .fix-label { font-size: 9px; font-weight: 800; text-transform: uppercase; color: #000000; margin-bottom: 4px; }
+    .panel-locomotive .fix-text { font-size: 11px; color: #333333; line-height: 1.5; }
+    .panel-locomotive .learn-link { font-size: 11px; color: #000000; text-decoration: underline; margin-top: 8px; display: inline-block; }
+    .panel-locomotive .panel-footer { padding: 16px 20px; background: #000000; }
+    .panel-locomotive .send-btn { width: 100%; padding: 12px; background: #ff4d00; border: none; border-radius: 0; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #000000; cursor: pointer; }
+
+    /* ============================================
+       3. Spring/Summer - Warm, Confident, Muted
+       ============================================ */
+    
+    .panel-springsummer {
+      width: 360px;
+      background: #f5f2eb;
+      border-radius: 12px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
     }
     
-    .panel-locomotive .panel-title-group {
-      display: flex;
-      align-items: center;
-    }
+    .panel-springsummer .panel-header { background: #4a5043; padding: 20px 24px; display: flex; align-items: flex-start; justify-content: space-between; }
+    .panel-springsummer .panel-title { font-size: 13px; font-weight: 600; color: #f5f2eb; }
+    .panel-springsummer .panel-subtitle { font-size: 12px; color: rgba(245, 242, 235, 0.6); margin-top: 2px; }
+    .panel-springsummer .close-btn { width: 32px; height: 32px; border-radius: 50%; background: rgba(245, 242, 235, 0.1); border: none; color: #f5f2eb; font-size: 16px; cursor: pointer; }
+    .panel-springsummer .panel-body { padding: 20px 24px; }
+    .panel-springsummer .violation-card { background: #ffffff; border-radius: 10px; padding: 18px; margin-bottom: 12px; border: 1px solid rgba(74, 80, 67, 0.08); }
+    .panel-springsummer .violation-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .panel-springsummer .severity-badge { padding: 5px 12px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; background: #c4453a; color: #ffffff; }
+    .panel-springsummer .severity-badge.serious { background: #d97c2e; }
+    .panel-springsummer .violation-id { font-size: 11px; color: #8a8a7a; }
+    .panel-springsummer .violation-title { font-size: 15px; font-weight: 600; color: #2d2d2a; margin-bottom: 6px; }
+    .panel-springsummer .violation-description { font-size: 13px; color: #6b6b60; line-height: 1.6; }
+    .panel-springsummer .fix-section { background: #f5f2eb; border-radius: 8px; padding: 14px; margin-top: 12px; }
+    .panel-springsummer .fix-label { font-size: 10px; font-weight: 700; text-transform: uppercase; color: #4a5043; margin-bottom: 6px; }
+    .panel-springsummer .fix-text { font-size: 12px; color: #4a5043; line-height: 1.5; }
+    .panel-springsummer .learn-link { font-size: 12px; color: #4a5043; text-decoration: underline; margin-top: 10px; display: inline-block; }
+    .panel-springsummer .panel-footer { padding: 16px 24px; background: #edeae3; }
+    .panel-springsummer .send-btn { width: 100%; padding: 14px; background: #4a5043; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; color: #f5f2eb; cursor: pointer; }
+
+    /* ============================================
+       4. Studio Feixen - Playful, Colorful, Bold
+       ============================================ */
     
-    .panel-locomotive .panel-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: #ffffff;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-    
-    .panel-locomotive .issue-count {
-      background: #ff4d00;
-      color: #000;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 20px;
-      margin-left: 10px;
-    }
-    
-    .panel-locomotive .close-btn {
-      width: 24px;
-      height: 24px;
-      border-radius: 0;
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #ffffff;
-      font-size: 12px;
-      cursor: pointer;
-    }
-    
-    .panel-locomotive .panel-body {
-      padding: 0;
-    }
-    
-    .panel-locomotive .violation-card {
+    .panel-feixen {
+      width: 340px;
       background: #ffffff;
-      border-bottom: 1px solid #e5e5e5;
-      padding: 16px 20px;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+      border: 3px solid #000000;
+      overflow: hidden;
     }
     
-    .panel-locomotive .violation-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
+    .panel-feixen .panel-header { background: #ff3366; padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; }
+    .panel-feixen .panel-title { font-size: 16px; font-weight: 800; color: #ffffff; }
+    .panel-feixen .issue-count { background: #ffff00; color: #000; font-size: 14px; font-weight: 800; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 8px; }
+    .panel-feixen .close-btn { width: 32px; height: 32px; border-radius: 50%; background: #ffffff; border: 3px solid #000000; color: #000; font-size: 16px; font-weight: 800; cursor: pointer; }
+    .panel-feixen .panel-body { padding: 16px; }
+    .panel-feixen .violation-card { background: #f0f0f0; border-radius: 16px; padding: 16px; margin-bottom: 12px; border: 2px solid #000000; }
+    .panel-feixen .violation-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .panel-feixen .severity-badge { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; border: 2px solid #000; background: #ff3366; color: #fff; }
+    .panel-feixen .severity-badge.serious { background: #ff9900; color: #000; }
+    .panel-feixen .violation-id { font-size: 10px; font-weight: 700; color: #666; text-transform: uppercase; }
+    .panel-feixen .violation-title { font-size: 14px; font-weight: 700; color: #000; margin-bottom: 6px; }
+    .panel-feixen .violation-description { font-size: 12px; color: #333; line-height: 1.5; }
+    .panel-feixen .fix-section { background: #ccff00; border-radius: 12px; padding: 12px; margin-top: 10px; border: 2px solid #000; }
+    .panel-feixen .fix-label { font-size: 10px; font-weight: 800; text-transform: uppercase; color: #000; margin-bottom: 4px; }
+    .panel-feixen .fix-text { font-size: 11px; color: #000; line-height: 1.5; }
+    .panel-feixen .learn-link { font-size: 12px; font-weight: 700; color: #ff3366; text-decoration: none; margin-top: 10px; display: inline-block; }
+    .panel-feixen .panel-footer { padding: 16px; background: #000; }
+    .panel-feixen .send-btn { width: 100%; padding: 14px; background: #00ff88; border: 3px solid #000; border-radius: 50px; font-size: 13px; font-weight: 800; text-transform: uppercase; color: #000; cursor: pointer; }
+
+    /* ============================================
+       5. Ueno - Clean, Minimal, Confident
+       ============================================ */
+    
+    .panel-ueno {
+      width: 380px;
+      background: #ffffff;
+      border-radius: 4px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      position: relative;
     }
     
-    .panel-locomotive .severity-badge {
-      padding: 3px 8px;
-      border-radius: 0;
-      font-size: 9px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      background: #ff0000;
-      color: #ffffff;
-    }
-    
-    .panel-locomotive .severity-badge.serious {
-      background: #ff4d00;
-      color: #000000;
-    }
-    
-    .panel-locomotive .violation-id {
-      font-family: 'SF Mono', Monaco, monospace;
-      font-size: 10px;
-      color: #999999;
-      text-transform: uppercase;
-    }
-    
-    .panel-locomotive .violation-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #000000;
-      margin-bottom: 4px;
-    }
-    
-    .panel-locomotive .violation-description {
-      font-size: 12px;
-      color: #666666;
-      line-height: 1.5;
-    }
-    
-    .panel-locomotive .fix-section {
-      background: #f5f5f5;
-      border-left: 3px solid #000000;
-      padding: 10px 12px;
-      margin-top: 10px;
-    }
-    
-    .panel-locomotive .fix-label {
-      font-size: 9px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #000000;
-      margin-bottom: 4px;
-    }
-    
-    .panel-locomotive .fix-text {
-      font-size: 11px;
-      color: #333333;
-      line-height: 1.5;
-    }
-    
-    .panel-locomotive .learn-link {
-      font-size: 11px;
-      color: #000000;
-      text-decoration: underline;
-      text-underline-offset: 2px;
-      margin-top: 8px;
-      display: inline-block;
-    }
-    
-    .panel-locomotive .panel-footer {
-      padding: 16px 20px;
-      background: #000000;
-    }
-    
-    .panel-locomotive .send-btn {
-      width: 100%;
-      padding: 12px 20px;
-      background: #ff4d00;
-      border: none;
-      border-radius: 0;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #000000;
-      cursor: pointer;
-    }
+    .panel-ueno .panel-header { padding: 24px 28px 20px; border-bottom: 1px solid #f0f0f0; }
+    .panel-ueno .panel-title { font-size: 14px; font-weight: 400; color: #000; margin-bottom: 4px; }
+    .panel-ueno .panel-subtitle { font-size: 13px; color: #888; }
+    .panel-ueno .close-btn { position: absolute; top: 20px; right: 20px; width: 32px; height: 32px; border-radius: 50%; background: transparent; border: none; color: #888; font-size: 20px; cursor: pointer; }
+    .panel-ueno .panel-body { padding: 24px 28px; }
+    .panel-ueno .violation-card { padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid #f0f0f0; }
+    .panel-ueno .violation-card:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .panel-ueno .violation-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .panel-ueno .severity-dot { width: 6px; height: 6px; border-radius: 50%; background: #e53935; }
+    .panel-ueno .severity-dot.serious { background: #fb8c00; }
+    .panel-ueno .severity-badge { font-size: 11px; font-weight: 500; text-transform: uppercase; color: #e53935; }
+    .panel-ueno .severity-badge.serious { color: #fb8c00; }
+    .panel-ueno .violation-id { font-size: 11px; color: #ccc; }
+    .panel-ueno .violation-title { font-size: 15px; font-weight: 500; color: #000; margin-bottom: 8px; line-height: 1.4; }
+    .panel-ueno .violation-description { font-size: 14px; color: #666; line-height: 1.6; }
+    .panel-ueno .fix-section { margin-top: 16px; padding-left: 16px; border-left: 2px solid #f0f0f0; }
+    .panel-ueno .fix-label { font-size: 11px; font-weight: 500; text-transform: uppercase; color: #888; margin-bottom: 6px; }
+    .panel-ueno .fix-text { font-size: 13px; color: #444; line-height: 1.6; }
+    .panel-ueno .learn-link { font-size: 13px; color: #000; text-decoration: underline; text-decoration-color: #ccc; margin-top: 12px; display: inline-block; }
+    .panel-ueno .panel-footer { padding: 20px 28px; background: #fafafa; }
+    .panel-ueno .send-btn { width: 100%; padding: 14px; background: #000; border: none; border-radius: 4px; font-size: 13px; font-weight: 500; color: #fff; cursor: pointer; }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>A11y Panel — Style Explorations</h1>
-    <p>Two visual directions inspired by design agency aesthetics</p>
+    <h1>A11y Panel — 5 Style Explorations</h1>
+    <p>Visual directions inspired by top design agency aesthetics.<br>Focus on border radius, typography, colors, and hierarchy.</p>
   </div>
 
-  <div class="comparison">
-    <!-- MetaLab Style -->
+  <div class="grid">
+    <!-- 1. MetaLab -->
     <div class="style-card">
       <div class="style-label">
-        <h2>MetaLab Style</h2>
+        <h2>1. MetaLab</h2>
         <p>Dark • Elegant • Premium</p>
+        <a href="https://metalab.com" target="_blank">metalab.com →</a>
       </div>
-      
       <div class="panel-metalab">
         <div class="panel-header">
-          <div class="panel-title-group">
-            <div class="panel-title">Accessibility Issues</div>
-            <div class="panel-subtitle">2 issues found on this element</div>
-          </div>
+          <div><div class="panel-title">Accessibility Issues</div><div class="panel-subtitle">2 issues found</div></div>
           <button class="close-btn">×</button>
         </div>
-        
         <div class="panel-body">
           <div class="violation-card">
-            <div class="violation-header">
-              <span class="severity-badge">Critical</span>
-              <span class="violation-id">color-contrast</span>
-            </div>
+            <div class="violation-header"><span class="severity-badge">Critical</span><span class="violation-id">color-contrast</span></div>
             <div class="violation-title">Elements must have sufficient color contrast</div>
-            <div class="violation-description">Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds.</div>
-            <div class="fix-section">
-              <div class="fix-label">How to fix</div>
-              <div class="fix-text">Change text color to #333333 or background to #ffffff to achieve 4.5:1 contrast ratio.</div>
-            </div>
-            <a href="#" class="learn-link">Learn more →</a>
-          </div>
-          
-          <div class="violation-card">
-            <div class="violation-header">
-              <span class="severity-badge serious">Serious</span>
-              <span class="violation-id">image-alt</span>
-            </div>
-            <div class="violation-title">Images must have alternate text</div>
-            <div class="violation-description">Ensures &lt;img&gt; elements have alternate text or a role of none or presentation.</div>
+            <div class="violation-description">Ensures contrast meets WCAG 2 AA thresholds.</div>
+            <div class="fix-section"><div class="fix-label">How to fix</div><div class="fix-text">Change text color to #333333.</div></div>
             <a href="#" class="learn-link">Learn more →</a>
           </div>
         </div>
-        
-        <div class="panel-footer">
-          <button class="send-btn">Send to Claude for Fix</button>
-        </div>
+        <div class="panel-footer"><button class="send-btn">Send to Claude for Fix</button></div>
       </div>
     </div>
 
-    <!-- Locomotive Style -->
+    <!-- 2. Locomotive -->
     <div class="style-card">
       <div class="style-label">
-        <h2>Locomotive Style</h2>
+        <h2>2. Locomotive</h2>
         <p>Bold • Sharp • High Contrast</p>
+        <a href="https://locomotive.ca" target="_blank">locomotive.ca →</a>
       </div>
-      
       <div class="panel-locomotive">
         <div class="panel-header">
-          <div class="panel-title-group">
-            <div class="panel-title">A11Y Issues</div>
-            <span class="issue-count">2</span>
-          </div>
+          <div style="display:flex;align-items:center"><div class="panel-title">A11Y Issues</div><span class="issue-count">2</span></div>
           <button class="close-btn">×</button>
         </div>
-        
         <div class="panel-body">
           <div class="violation-card">
-            <div class="violation-header">
-              <span class="severity-badge">Critical</span>
-              <span class="violation-id">COLOR-CONTRAST</span>
-            </div>
+            <div class="violation-header"><span class="severity-badge">Critical</span><span class="violation-id">COLOR-CONTRAST</span></div>
+            <div class="violation-title">Elements must have sufficient color contrast</div>
+            <div class="violation-description">Ensures contrast meets WCAG 2 AA thresholds.</div>
+            <div class="fix-section"><div class="fix-label">Fix</div><div class="fix-text">Change text color to #333333.</div></div>
+            <a href="#" class="learn-link">Learn more →</a>
+          </div>
+        </div>
+        <div class="panel-footer"><button class="send-btn">Send to Claude →</button></div>
+      </div>
+    </div>
+
+    <!-- 3. Spring/Summer -->
+    <div class="style-card">
+      <div class="style-label">
+        <h2>3. Spring/Summer</h2>
+        <p>Warm • Confident • Muted</p>
+        <a href="https://springsummer.dk" target="_blank">springsummer.dk →</a>
+      </div>
+      <div class="panel-springsummer">
+        <div class="panel-header">
+          <div><div class="panel-title">Accessibility Issues</div><div class="panel-subtitle">2 issues found</div></div>
+          <button class="close-btn">×</button>
+        </div>
+        <div class="panel-body">
+          <div class="violation-card">
+            <div class="violation-header"><span class="severity-badge">Critical</span><span class="violation-id">color-contrast</span></div>
+            <div class="violation-title">Elements must have sufficient color contrast</div>
+            <div class="violation-description">Ensures contrast meets WCAG 2 AA thresholds.</div>
+            <div class="fix-section"><div class="fix-label">How to fix</div><div class="fix-text">Change text color to #333333.</div></div>
+            <a href="#" class="learn-link">Learn more →</a>
+          </div>
+        </div>
+        <div class="panel-footer"><button class="send-btn">Send to Claude for Fix</button></div>
+      </div>
+    </div>
+
+    <!-- 4. Studio Feixen -->
+    <div class="style-card">
+      <div class="style-label">
+        <h2>4. Studio Feixen</h2>
+        <p>Playful • Colorful • Bold</p>
+        <a href="https://studiofeixen.ch" target="_blank">studiofeixen.ch →</a>
+      </div>
+      <div class="panel-feixen">
+        <div class="panel-header">
+          <div style="display:flex;align-items:center"><div class="panel-title">A11y Issues</div><span class="issue-count">2</span></div>
+          <button class="close-btn">×</button>
+        </div>
+        <div class="panel-body">
+          <div class="violation-card">
+            <div class="violation-header"><span class="severity-badge">Critical</span><span class="violation-id">COLOR-CONTRAST</span></div>
+            <div class="violation-title">Elements must have sufficient color contrast</div>
+            <div class="violation-description">Ensures contrast meets WCAG 2 AA thresholds.</div>
+            <div class="fix-section"><div class="fix-label">Fix it!</div><div class="fix-text">Change text color to #333333.</div></div>
+            <a href="#" class="learn-link">Learn more →</a>
+          </div>
+        </div>
+        <div class="panel-footer"><button class="send-btn">Send to Claude! 🚀</button></div>
+      </div>
+    </div>
+
+    <!-- 5. Ueno -->
+    <div class="style-card">
+      <div class="style-label">
+        <h2>5. Ueno</h2>
+        <p>Clean • Minimal • Confident</p>
+        <a href="https://ueno.co" target="_blank">ueno.co →</a>
+      </div>
+      <div class="panel-ueno">
+        <div class="panel-header">
+          <div><div class="panel-title">Accessibility Issues</div><div class="panel-subtitle">2 issues found on this element</div></div>
+          <button class="close-btn">×</button>
+        </div>
+        <div class="panel-body">
+          <div class="violation-card">
+            <div class="violation-header"><span class="severity-dot"></span><span class="severity-badge">Critical</span><span class="violation-id">color-contrast</span></div>
             <div class="violation-title">Elements must have sufficient color contrast</div>
             <div class="violation-description">Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds.</div>
-            <div class="fix-section">
-              <div class="fix-label">Fix</div>
-              <div class="fix-text">Change text color to #333333 or background to #ffffff to achieve 4.5:1 contrast ratio.</div>
-            </div>
-            <a href="#" class="learn-link">Learn more →</a>
-          </div>
-          
-          <div class="violation-card">
-            <div class="violation-header">
-              <span class="severity-badge serious">Serious</span>
-              <span class="violation-id">IMAGE-ALT</span>
-            </div>
-            <div class="violation-title">Images must have alternate text</div>
-            <div class="violation-description">Ensures &lt;img&gt; elements have alternate text or a role of none or presentation.</div>
+            <div class="fix-section"><div class="fix-label">How to fix</div><div class="fix-text">Change text color to #333333 or background to #ffffff.</div></div>
             <a href="#" class="learn-link">Learn more →</a>
           </div>
         </div>
-        
-        <div class="panel-footer">
-          <button class="send-btn">Send to Claude →</button>
-        </div>
+        <div class="panel-footer"><button class="send-btn">Send to Claude for Fix</button></div>
       </div>
     </div>
   </div>
