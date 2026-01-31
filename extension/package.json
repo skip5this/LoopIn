@@ -1,0 +1,15 @@
+{
+  "name": "extension",
+  "version": "1.0.0",
+  "description": "A Chrome extension that captures DOM elements and sends them to Claude Code via MCP.",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axe-core": "^4.11.1"
+  }
+}
