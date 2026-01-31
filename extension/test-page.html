@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>A11y Test Page</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .hero {
+      background: #333;
+      color: #666; /* Low contrast - A11y issue! */
+      padding: 40px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    button {
+      background: #635bff;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+    .small-button {
+      padding: 4px 8px; /* Touch target too small - A11y issue! */
+      font-size: 10px;
+    }
+    input {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>Welcome to Our Site</h1>
+    <p>This text has low contrast against the background.</p>
+  </div>
+
+  <div class="card">
+    <h2>Images Without Alt Text</h2>
+    <!-- Missing alt text - A11y issue! -->
+    <img src="https://via.placeholder.com/300x150" width="300" height="150">
+    <p>The image above is missing alt text.</p>
+  </div>
+
+  <div class="card">
+    <h2>Form Without Labels</h2>
+    <!-- Missing labels - A11y issue! -->
+    <input type="text" placeholder="Enter your name">
+    <input type="email" placeholder="Enter your email">
+    <button>Submit</button>
+  </div>
+
+  <div class="card">
+    <h2>Buttons</h2>
+    <button>Good Button</button>
+    <!-- Empty button - A11y issue! -->
+    <button></button>
+    <!-- Icon-only button without aria-label - A11y issue! -->
+    <button class="small-button">×</button>
+  </div>
+
+  <div class="card">
+    <h2>Links</h2>
+    <!-- Empty link - A11y issue! -->
+    <a href="#">Click here</a>
+    <a href="#"></a>
+  </div>
+
+  <div class="card">
+    <h4>Skipped Heading Level</h4>
+    <!-- Skipped h3 - A11y issue! -->
+    <p>This section skipped from h2 to h4.</p>
+  </div>
+
+</body>
+</html>
