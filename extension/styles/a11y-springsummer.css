@@ -1,0 +1,156 @@
+/* ============================================
+   A11y Panel - Spring/Summer Style
+   Inspired by: springsummer.dk
+   
+   Vibe: Warm, confident, muted
+   - Warm olive/cream palette
+   - Bold sans-serif typography
+   - Generous spacing
+   - Soft rounded corners
+   ============================================ */
+
+.panel-springsummer {
+  width: 360px;
+  background: #f5f2eb; /* Warm cream */
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.panel-springsummer .panel-header {
+  background: #4a5043; /* Muted olive */
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-springsummer .panel-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f5f2eb;
+  letter-spacing: 0.02em;
+}
+
+.panel-springsummer .panel-subtitle {
+  font-size: 12px;
+  color: rgba(245, 242, 235, 0.6);
+  margin-top: 2px;
+}
+
+.panel-springsummer .close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(245, 242, 235, 0.1);
+  border: none;
+  color: #f5f2eb;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.panel-springsummer .panel-body {
+  padding: 20px 24px;
+}
+
+.panel-springsummer .violation-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(74, 80, 67, 0.08);
+}
+
+.panel-springsummer .violation-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.panel-springsummer .severity-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.panel-springsummer .severity-badge.critical {
+  background: #c4453a;
+  color: #ffffff;
+}
+
+.panel-springsummer .severity-badge.serious {
+  background: #d97c2e;
+  color: #ffffff;
+}
+
+.panel-springsummer .violation-id {
+  font-size: 11px;
+  color: #8a8a7a;
+}
+
+.panel-springsummer .violation-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2d2d2a;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.panel-springsummer .violation-description {
+  font-size: 13px;
+  color: #6b6b60;
+  line-height: 1.6;
+}
+
+.panel-springsummer .fix-section {
+  background: #f5f2eb;
+  border-radius: 8px;
+  padding: 14px;
+  margin-top: 12px;
+}
+
+.panel-springsummer .fix-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #4a5043;
+  margin-bottom: 6px;
+}
+
+.panel-springsummer .fix-text {
+  font-size: 12px;
+  color: #4a5043;
+  line-height: 1.5;
+}
+
+.panel-springsummer .learn-link {
+  font-size: 12px;
+  color: #4a5043;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.panel-springsummer .panel-footer {
+  padding: 16px 24px;
+  background: #edeae3;
+}
+
+.panel-springsummer .send-btn {
+  width: 100%;
+  padding: 14px 20px;
+  background: #4a5043;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #f5f2eb;
+  cursor: pointer;
+}
