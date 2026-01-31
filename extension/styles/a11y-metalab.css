@@ -1,0 +1,205 @@
+/* ============================================
+   A11y Panel - MetaLab Style
+   Inspired by: metalab.com
+   
+   Vibe: Dark, premium, elegant
+   - Deep blacks with subtle purple tints
+   - Elegant serif for headings
+   - Refined rounded corners
+   - Subtle shadows and borders
+   ============================================ */
+
+.loopin-a11y-panel.metalab {
+  width: 360px;
+  max-height: 420px;
+  background: #0a0a0f;
+  border-radius: 16px;
+  box-shadow: 
+    0 24px 48px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.loopin-a11y-panel.metalab .panel-header {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.loopin-a11y-panel.metalab .panel-title {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #fafafa;
+  letter-spacing: -0.01em;
+}
+
+.loopin-a11y-panel.metalab .panel-subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 2px;
+}
+
+.loopin-a11y-panel.metalab .close-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.loopin-a11y-panel.metalab .close-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.loopin-a11y-panel.metalab .panel-body {
+  padding: 16px 24px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.loopin-a11y-panel.metalab .violation-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.loopin-a11y-panel.metalab .violation-card:last-child {
+  margin-bottom: 0;
+}
+
+.loopin-a11y-panel.metalab .violation-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.loopin-a11y-panel.metalab .severity-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.loopin-a11y-panel.metalab .severity-badge.critical {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.loopin-a11y-panel.metalab .severity-badge.serious {
+  background: rgba(249, 115, 22, 0.15);
+  color: #fb923c;
+  border: 1px solid rgba(249, 115, 22, 0.2);
+}
+
+.loopin-a11y-panel.metalab .severity-badge.moderate {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.loopin-a11y-panel.metalab .severity-badge.minor {
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.loopin-a11y-panel.metalab .violation-id {
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.loopin-a11y-panel.metalab .violation-title {
+  font-family: 'Georgia', serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #fafafa;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.loopin-a11y-panel.metalab .violation-description {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.loopin-a11y-panel.metalab .fix-section {
+  background: rgba(99, 102, 241, 0.06);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.loopin-a11y-panel.metalab .fix-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(165, 180, 252, 0.8);
+  margin-bottom: 6px;
+}
+
+.loopin-a11y-panel.metalab .fix-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+.loopin-a11y-panel.metalab .learn-link {
+  font-size: 12px;
+  color: #818cf8;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.loopin-a11y-panel.metalab .learn-link:hover {
+  color: #a5b4fc;
+}
+
+.loopin-a11y-panel.metalab .panel-footer {
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.loopin-a11y-panel.metalab .send-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.loopin-a11y-panel.metalab .send-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 12px rgba(99, 102, 241, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>A11y Panel Style Explorations</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #1a1a1a;
+      min-height: 100vh;
+      padding: 40px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .header h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    
+    .header p {
+      font-size: 14px;
+      color: #888;
+    }
+    
+    .comparison {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .style-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .style-label {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .style-label h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    
+    .style-label p {
+      font-size: 12px;
+      color: #666;
+    }
+
+    /* ============================================
+       MetaLab Style
+       ============================================ */
+    
+    .panel-metalab {
+      width: 360px;
+      background: #0a0a0f;
+      border-radius: 16px;
+      box-shadow: 
+        0 24px 48px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+    
+    .panel-metalab .panel-header {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .panel-metalab .panel-title-group {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .panel-metalab .panel-title {
+      font-family: 'Georgia', serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: #fafafa;
+    }
+    
+    .panel-metalab .panel-subtitle {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-top: 2px;
+    }
+    
+    .panel-metalab .close-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 14px;
+      cursor: pointer;
+    }
+    
+    .panel-metalab .panel-body {
+      padding: 16px 24px;
+    }
+    
+    .panel-metalab .violation-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    
+    .panel-metalab .violation-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    
+    .panel-metalab .severity-badge {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+    
+    .panel-metalab .severity-badge.serious {
+      background: rgba(249, 115, 22, 0.15);
+      color: #fb923c;
+      border: 1px solid rgba(249, 115, 22, 0.2);
+    }
+    
+    .panel-metalab .violation-id {
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .panel-metalab .violation-title {
+      font-family: 'Georgia', serif;
+      font-size: 14px;
+      color: #fafafa;
+      margin-bottom: 6px;
+    }
+    
+    .panel-metalab .violation-description {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    
+    .panel-metalab .fix-section {
+      background: rgba(99, 102, 241, 0.06);
+      border: 1px solid rgba(99, 102, 241, 0.1);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .panel-metalab .fix-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: rgba(165, 180, 252, 0.8);
+      margin-bottom: 6px;
+    }
+    
+    .panel-metalab .fix-text {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.5;
+    }
+    
+    .panel-metalab .learn-link {
+      font-size: 12px;
+      color: #818cf8;
+      text-decoration: none;
+    }
+    
+    .panel-metalab .panel-footer {
+      padding: 16px 24px;
+      background: rgba(255, 255, 255, 0.02);
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    
+    .panel-metalab .send-btn {
+      width: 100%;
+      padding: 12px 20px;
+      background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* ============================================
+       Locomotive Style
+       ============================================ */
+    
+    .panel-locomotive {
+      width: 340px;
+      background: #ffffff;
+      border-radius: 0;
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+    
+    .panel-locomotive .panel-header {
+      background: #000000;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .panel-locomotive .panel-title-group {
+      display: flex;
+      align-items: center;
+    }
+    
+    .panel-locomotive .panel-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    .panel-locomotive .issue-count {
+      background: #ff4d00;
+      color: #000;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-left: 10px;
+    }
+    
+    .panel-locomotive .close-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 0;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    
+    .panel-locomotive .panel-body {
+      padding: 0;
+    }
+    
+    .panel-locomotive .violation-card {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 16px 20px;
+    }
+    
+    .panel-locomotive .violation-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    
+    .panel-locomotive .severity-badge {
+      padding: 3px 8px;
+      border-radius: 0;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: #ff0000;
+      color: #ffffff;
+    }
+    
+    .panel-locomotive .severity-badge.serious {
+      background: #ff4d00;
+      color: #000000;
+    }
+    
+    .panel-locomotive .violation-id {
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 10px;
+      color: #999999;
+      text-transform: uppercase;
+    }
+    
+    .panel-locomotive .violation-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #000000;
+      margin-bottom: 4px;
+    }
+    
+    .panel-locomotive .violation-description {
+      font-size: 12px;
+      color: #666666;
+      line-height: 1.5;
+    }
+    
+    .panel-locomotive .fix-section {
+      background: #f5f5f5;
+      border-left: 3px solid #000000;
+      padding: 10px 12px;
+      margin-top: 10px;
+    }
+    
+    .panel-locomotive .fix-label {
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #000000;
+      margin-bottom: 4px;
+    }
+    
+    .panel-locomotive .fix-text {
+      font-size: 11px;
+      color: #333333;
+      line-height: 1.5;
+    }
+    
+    .panel-locomotive .learn-link {
+      font-size: 11px;
+      color: #000000;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-top: 8px;
+      display: inline-block;
+    }
+    
+    .panel-locomotive .panel-footer {
+      padding: 16px 20px;
+      background: #000000;
+    }
+    
+    .panel-locomotive .send-btn {
+      width: 100%;
+      padding: 12px 20px;
+      background: #ff4d00;
+      border: none;
+      border-radius: 0;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #000000;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>A11y Panel — Style Explorations</h1>
+    <p>Two visual directions inspired by design agency aesthetics</p>
+  </div>
+
+  <div class="comparison">
+    <!-- MetaLab Style -->
+    <div class="style-card">
+      <div class="style-label">
+        <h2>MetaLab Style</h2>
+        <p>Dark • Elegant • Premium</p>
+      </div>
+      
+      <div class="panel-metalab">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <div class="panel-title">Accessibility Issues</div>
+            <div class="panel-subtitle">2 issues found on this element</div>
+          </div>
+          <button class="close-btn">×</button>
+        </div>
+        
+        <div class="panel-body">
+          <div class="violation-card">
+            <div class="violation-header">
+              <span class="severity-badge">Critical</span>
+              <span class="violation-id">color-contrast</span>
+            </div>
+            <div class="violation-title">Elements must have sufficient color contrast</div>
+            <div class="violation-description">Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds.</div>
+            <div class="fix-section">
+              <div class="fix-label">How to fix</div>
+              <div class="fix-text">Change text color to #333333 or background to #ffffff to achieve 4.5:1 contrast ratio.</div>
+            </div>
+            <a href="#" class="learn-link">Learn more →</a>
+          </div>
+          
+          <div class="violation-card">
+            <div class="violation-header">
+              <span class="severity-badge serious">Serious</span>
+              <span class="violation-id">image-alt</span>
+            </div>
+            <div class="violation-title">Images must have alternate text</div>
+            <div class="violation-description">Ensures &lt;img&gt; elements have alternate text or a role of none or presentation.</div>
+            <a href="#" class="learn-link">Learn more →</a>
+          </div>
+        </div>
+        
+        <div class="panel-footer">
+          <button class="send-btn">Send to Claude for Fix</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Locomotive Style -->
+    <div class="style-card">
+      <div class="style-label">
+        <h2>Locomotive Style</h2>
+        <p>Bold • Sharp • High Contrast</p>
+      </div>
+      
+      <div class="panel-locomotive">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <div class="panel-title">A11Y Issues</div>
+            <span class="issue-count">2</span>
+          </div>
+          <button class="close-btn">×</button>
+        </div>
+        
+        <div class="panel-body">
+          <div class="violation-card">
+            <div class="violation-header">
+              <span class="severity-badge">Critical</span>
+              <span class="violation-id">COLOR-CONTRAST</span>
+            </div>
+            <div class="violation-title">Elements must have sufficient color contrast</div>
+            <div class="violation-description">Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds.</div>
+            <div class="fix-section">
+              <div class="fix-label">Fix</div>
+              <div class="fix-text">Change text color to #333333 or background to #ffffff to achieve 4.5:1 contrast ratio.</div>
+            </div>
+            <a href="#" class="learn-link">Learn more →</a>
+          </div>
+          
+          <div class="violation-card">
+            <div class="violation-header">
+              <span class="severity-badge serious">Serious</span>
+              <span class="violation-id">IMAGE-ALT</span>
+            </div>
+            <div class="violation-title">Images must have alternate text</div>
+            <div class="violation-description">Ensures &lt;img&gt; elements have alternate text or a role of none or presentation.</div>
+            <a href="#" class="learn-link">Learn more →</a>
+          </div>
+        </div>
+        
+        <div class="panel-footer">
+          <button class="send-btn">Send to Claude →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

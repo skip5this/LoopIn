@@ -1,0 +1,215 @@
+/* ============================================
+   A11y Panel - Locomotive Style
+   Inspired by: locomotive.ca
+   
+   Vibe: Bold, experimental, playful
+   - High contrast black/white
+   - Sharp corners mixed with pills
+   - Bold condensed typography
+   - Accent color pops
+   ============================================ */
+
+.loopin-a11y-panel.locomotive {
+  width: 340px;
+  max-height: 420px;
+  background: #ffffff;
+  border-radius: 0; /* Sharp corners */
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.08);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.loopin-a11y-panel.locomotive .panel-header {
+  background: #000000;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.loopin-a11y-panel.locomotive .panel-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.loopin-a11y-panel.locomotive .issue-count {
+  background: #ff4d00; /* Locomotive orange */
+  color: #000;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-left: 8px;
+}
+
+.loopin-a11y-panel.locomotive .close-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 0;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.loopin-a11y-panel.locomotive .close-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+.loopin-a11y-panel.locomotive .panel-body {
+  padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.loopin-a11y-panel.locomotive .violation-card {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 16px 20px;
+}
+
+.loopin-a11y-panel.locomotive .violation-card:last-child {
+  border-bottom: none;
+}
+
+.loopin-a11y-panel.locomotive .violation-card:hover {
+  background: #fafafa;
+}
+
+.loopin-a11y-panel.locomotive .violation-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.loopin-a11y-panel.locomotive .severity-badge {
+  padding: 3px 8px;
+  border-radius: 0;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.loopin-a11y-panel.locomotive .severity-badge.critical {
+  background: #ff0000;
+  color: #ffffff;
+}
+
+.loopin-a11y-panel.locomotive .severity-badge.serious {
+  background: #ff4d00;
+  color: #000000;
+}
+
+.loopin-a11y-panel.locomotive .severity-badge.moderate {
+  background: #ffcc00;
+  color: #000000;
+}
+
+.loopin-a11y-panel.locomotive .severity-badge.minor {
+  background: #e5e5e5;
+  color: #000000;
+}
+
+.loopin-a11y-panel.locomotive .violation-id {
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 10px;
+  color: #999999;
+  text-transform: uppercase;
+}
+
+.loopin-a11y-panel.locomotive .violation-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.loopin-a11y-panel.locomotive .violation-description {
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.5;
+}
+
+.loopin-a11y-panel.locomotive .fix-section {
+  background: #f5f5f5;
+  border-left: 3px solid #000000;
+  padding: 10px 12px;
+  margin-top: 10px;
+}
+
+.loopin-a11y-panel.locomotive .fix-label {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #000000;
+  margin-bottom: 4px;
+}
+
+.loopin-a11y-panel.locomotive .fix-text {
+  font-size: 11px;
+  color: #333333;
+  line-height: 1.5;
+}
+
+.loopin-a11y-panel.locomotive .learn-link {
+  font-size: 11px;
+  color: #000000;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.loopin-a11y-panel.locomotive .learn-link:hover {
+  color: #ff4d00;
+}
+
+.loopin-a11y-panel.locomotive .panel-footer {
+  padding: 16px 20px;
+  background: #000000;
+}
+
+.loopin-a11y-panel.locomotive .send-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background: #ff4d00;
+  border: none;
+  border-radius: 0;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #000000;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.loopin-a11y-panel.locomotive .send-btn:hover {
+  background: #ffffff;
+}
+
+/* Scrollbar styling */
+.loopin-a11y-panel.locomotive .panel-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.loopin-a11y-panel.locomotive .panel-body::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+.loopin-a11y-panel.locomotive .panel-body::-webkit-scrollbar-thumb {
+  background: #000000;
+}
