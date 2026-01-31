@@ -93,6 +93,15 @@ app.get("/health", (_req: Request, res: Response) => {
   });
 });
 
+// Stats endpoint (for extension popup)
+app.get("/stats", (_req: Request, res: Response) => {
+  res.json({
+    captures: storage.elements.length,
+    tasks: storage.tasks.length,
+    pendingTasks: storage.tasks.filter(t => t.status === "pending").length
+  });
+});
+
 // Debug: view all tasks (temporary endpoint for testing)
 app.get("/tasks", (_req: Request, res: Response) => {
   res.json(storage.tasks);
