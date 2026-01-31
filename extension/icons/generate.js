@@ -1,12 +1,15 @@
-// Simple icon generator using node-canvas
-// Run: node generate.js (requires canvas package)
-// Or just create icons manually in any image editor
+// Simple icon generator
+// Run: node generate.js
+// Creates SVG icons that can be converted to PNG
+
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const sizes = [16, 48, 128];
-
-// For now, create simple placeholder SVGs that can be converted
-const fs = require('fs');
-const path = require('path');
 
 // Create a simple SVG icon
 function createSVG(size) {
