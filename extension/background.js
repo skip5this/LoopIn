@@ -7,6 +7,26 @@ let captureStats = {
   lastCapture: null
 };
 
+const DEFAULT_SERVER = 'http://localhost:3456';
+
+// Get the current server URL from storage
+async function getServerUrl() {
+  return new Promise((resolve) => {
+    chrome.storage.sync.get(['serverUrl'], (result) => {
+      resolve(result.serverUrl || DEFAULT_SERVER);
+    });
+  });
+}
+
+// Proxy fetch from content scripts (bypasses mixed content restrictions)
+async function proxyFetch(url, options) {
+  const response = await fetch(url, options);
+  const text = await response.text();
+  let data;
+  try { data = JSON.parse(text); } catch { data = text; }
+  return { ok: response.ok, status: response.status, data };
+}
+
 // Listen for messages from content scripts
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'captured') {
@@ -22,6 +42,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (sender.tab?.id) {
       setBadgeForTab(sender.tab.id, message.captureMode);
     }
+  } else if (message.type === 'proxy_fetch') {
+    // Proxy fetch requests from content scripts to bypass mixed content
+    proxyFetch(message.url, message.options)
+      .then(result => sendResponse(result))
+      .catch(err => sendResponse({ ok: false, error: err.message }));
+    return true; // keep channel open for async response
   }
 });
 
