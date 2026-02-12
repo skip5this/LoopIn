@@ -1,51 +1,284 @@
-/* LoopIn Element Highlight */
-.loopin-highlight {
-  outline: 2px dashed #635bff !important;
-  outline-offset: 2px !important;
-  cursor: crosshair !important;
-}
+/* ============================================
+   LoopIn — MetaLab-Inspired UI
+   Dark, premium, elegant
+   ============================================ */
 
-/* Toast Notifications */
-.loopin-toast {
+/* ============================================
+   Control Bar
+   ============================================ */
+
+.loopin-control-bar {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #1a1a2e;
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 14px;
   z-index: 2147483647;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  animation: loopin-slide-in 0.3s ease;
-  max-width: 300px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  transition: all 0.15s ease;
 }
 
-.loopin-toast.loopin-success {
-  border-left: 4px solid #10b981;
+.loopin-control-bar * {
+  box-sizing: border-box;
 }
 
-.loopin-toast.loopin-info {
-  border-left: 4px solid #635bff;
+/* Collapsed state — just the icon */
+.loopin-bar-collapsed {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #0a0a0f;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 0.15s ease;
+  position: relative;
 }
 
-.loopin-toast.loopin-error {
-  border-left: 4px solid #ef4444;
+.loopin-bar-collapsed:hover {
+  border-color: rgba(99, 91, 255, 0.3);
+  color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(99, 91, 255, 0.2);
 }
 
-@keyframes loopin-slide-in {
-  from {
-    transform: translateX(100px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+.loopin-control-bar.loopin-collapsed .loopin-bar-collapsed {
+  display: flex;
 }
 
-/* Dialog Overlay */
+.loopin-control-bar.loopin-collapsed .loopin-bar-expanded {
+  display: none;
+}
+
+/* Badge */
+.loopin-bar-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  background: #635bff;
+  border-radius: 9px;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #0a0a0f;
+}
+
+/* Expanded state — the full bar */
+.loopin-bar-expanded {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: #0a0a0f;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  padding: 4px;
+}
+
+.loopin-bar-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.loopin-bar-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.loopin-bar-btn.loopin-active {
+  background: rgba(99, 91, 255, 0.15);
+  color: #a5b4fc;
+}
+
+.loopin-bar-btn.loopin-active:hover {
+  background: rgba(99, 91, 255, 0.25);
+}
+
+.loopin-bar-btn-minimize {
+  padding: 8px;
+}
+
+.loopin-bar-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.loopin-bar-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 0 2px;
+}
+
+/* Capture dot indicator */
+.loopin-capture-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.15s ease;
+}
+
+.loopin-capture-dot.loopin-active {
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+  animation: loopin-pulse 2s ease-in-out infinite;
+}
+
+@keyframes loopin-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* ============================================
+   Settings Panel
+   ============================================ */
+
+.loopin-settings-panel {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  z-index: 2147483646;
+  width: 300px;
+  background: #0a0a0f;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow: hidden;
+  animation: loopin-panel-in 0.15s ease;
+}
+
+@keyframes loopin-panel-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.loopin-settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: #fafafa;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.loopin-settings-close {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.loopin-settings-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.loopin-settings-body {
+  padding: 16px 20px;
+}
+
+.loopin-settings-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.loopin-settings-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.loopin-settings-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #fafafa;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.loopin-settings-input:focus {
+  border-color: rgba(99, 91, 255, 0.4);
+}
+
+.loopin-settings-status {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.loopin-settings-status.loopin-connected {
+  color: #22c55e;
+}
+
+.loopin-settings-status.loopin-disconnected {
+  color: #ef4444;
+}
+
+.loopin-settings-save {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.loopin-settings-save:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   Capture Dialog (MetaLab style)
+   ============================================ */
+
 .loopin-dialog-overlay {
   position: fixed;
   top: 0;
@@ -54,11 +287,11 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
-  z-index: 2147483646;
+  z-index: 2147483647;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: loopin-fade-in 0.2s ease;
+  animation: loopin-fade-in 0.15s ease;
 }
 
 @keyframes loopin-fade-in {
@@ -66,507 +299,240 @@
   to { opacity: 1; }
 }
 
-/* Dialog */
 .loopin-dialog {
-  background: #18181b;
-  border-radius: 16px;
-  width: 520px;
+  width: 480px;
   max-width: 90vw;
-  max-height: 80vh;
+  background: #0a0a0f;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  animation: loopin-dialog-in 0.2s ease;
+  animation: loopin-dialog-in 0.15s ease;
 }
 
 @keyframes loopin-dialog-in {
-  from {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* Dialog Header */
 .loopin-dialog-header {
-  background: linear-gradient(135deg, #635bff 0%, #4f46e5 100%);
-  color: #fff;
-  padding: 16px 20px;
-  font-weight: 600;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.loopin-dialog-header svg {
-  width: 20px;
-  height: 20px;
-}
-
-/* Dialog Body */
-.loopin-dialog-body {
-  padding: 20px;
-  overflow-y: auto;
-  max-height: 50vh;
-}
-
-.loopin-dialog-body label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: #a1a1aa;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.loopin-dialog-body pre {
-  background: #09090b;
-  color: #d4d4d8;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 12px;
-  overflow-x: auto;
-  margin-bottom: 16px;
-  white-space: pre-wrap;
-  word-break: break-all;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
-  max-height: 150px;
-}
-
-.loopin-dialog-body textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border: 2px solid #27272a;
-  border-radius: 10px;
-  font-size: 14px;
-  resize: vertical;
-  min-height: 80px;
-  font-family: inherit;
-  box-sizing: border-box;
-  color: #fafafa;
-  background: #09090b;
-  transition: border-color 0.2s ease;
-}
-
-.loopin-dialog-body textarea:focus {
-  outline: none;
-  border-color: #635bff;
-}
-
-.loopin-dialog-body textarea::placeholder {
-  color: #52525b;
-}
-
-/* Dialog Footer */
-.loopin-dialog-footer {
-  padding: 16px 20px;
-  background: #09090b;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Buttons */
-.loopin-btn {
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  border: none;
-  transition: all 0.2s ease;
-}
-
-.loopin-btn-secondary {
-  background: #27272a;
-  color: #d4d4d8;
-}
-
-.loopin-btn-secondary:hover {
-  background: #3f3f46;
-}
-
-.loopin-btn-primary {
-  background: #635bff;
-  color: #fff;
-}
-
-.loopin-btn-primary:hover {
-  background: #7c73ff;
-}
-
-/* Capture Mode Indicator */
-.loopin-indicator {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  background: #18181b;
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 24px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  z-index: 2147483645;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s ease;
-}
-
-.loopin-indicator:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-}
-
-.loopin-indicator.loopin-active {
-  background: #635bff;
-  border-color: #635bff;
-}
-
-.loopin-indicator-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #52525b;
-}
-
-.loopin-indicator.loopin-active .loopin-indicator-dot {
-  background: #10b981;
-  animation: loopin-pulse 1.5s infinite;
-}
-
-@keyframes loopin-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-/* ============================================
-   A11y Mode Styles
-   ============================================ */
-
-/* A11y Status Indicator */
-.loopin-a11y-indicator {
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  background: #18181b;
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 24px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  z-index: 2147483645;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s ease;
-}
-
-.loopin-a11y-indicator:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-}
-
-.loopin-a11y-indicator.good {
-  border-color: #10b981;
-}
-
-.loopin-a11y-indicator.warning {
-  border-color: #f59e0b;
-}
-
-.loopin-a11y-indicator.serious {
-  border-color: #f97316;
-}
-
-.loopin-a11y-indicator.critical {
-  border-color: #ef4444;
-}
-
-.loopin-a11y-status-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.loopin-a11y-status-icon.good {
-  background: #10b981;
-  color: #fff;
-}
-
-.loopin-a11y-status-icon.warning {
-  background: #f59e0b;
-  color: #000;
-}
-
-.loopin-a11y-status-icon.serious {
-  background: #f97316;
-  color: #fff;
-}
-
-.loopin-a11y-status-icon.critical {
-  background: #ef4444;
-  color: #fff;
-}
-
-/* Issue Badge */
-.loopin-a11y-badge {
-  position: fixed;
-  cursor: pointer;
-  z-index: 2147483646;
-  animation: loopin-badge-in 0.2s ease;
-}
-
-@keyframes loopin-badge-in {
-  from {
-    transform: scale(0);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.loopin-a11y-badge-icon {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease;
-}
-
-.loopin-a11y-badge:hover .loopin-a11y-badge-icon {
-  transform: scale(1.1);
-}
-
-.loopin-a11y-badge-icon.critical {
-  background: #ef4444;
-  color: #fff;
-}
-
-.loopin-a11y-badge-icon.serious {
-  background: #f97316;
-  color: #fff;
-}
-
-.loopin-a11y-badge-icon.moderate {
-  background: #f59e0b;
-  color: #000;
-}
-
-.loopin-a11y-badge-icon.minor {
-  background: #3b82f6;
-  color: #fff;
-}
-
-/* A11y Highlight */
-.loopin-a11y-highlight {
-  outline: 3px solid #ef4444 !important;
-  outline-offset: 2px !important;
-}
-
-/* Issue Panel */
-.loopin-a11y-panel {
-  position: fixed;
-  width: 340px;
-  max-height: 400px;
-  background: #18181b;
-  border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  overflow: hidden;
-  animation: loopin-panel-in 0.2s ease;
-}
-
-@keyframes loopin-panel-in {
-  from {
-    transform: translateY(10px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.loopin-a11y-panel-header {
-  background: #27272a;
-  color: #fff;
-  padding: 12px 16px;
-  font-weight: 600;
-  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.loopin-a11y-close {
-  background: none;
-  border: none;
-  color: #71717a;
-  font-size: 20px;
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
-}
-
-.loopin-a11y-close:hover {
-  color: #fff;
-}
-
-.loopin-a11y-panel-body {
-  padding: 12px;
-  overflow-y: auto;
-  max-height: 280px;
-}
-
-.loopin-a11y-violation {
-  background: #09090b;
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-left: 3px solid #71717a;
-}
-
-.loopin-a11y-violation.critical {
-  border-left-color: #ef4444;
-}
-
-.loopin-a11y-violation.serious {
-  border-left-color: #f97316;
-}
-
-.loopin-a11y-violation.moderate {
-  border-left-color: #f59e0b;
-}
-
-.loopin-a11y-violation.minor {
-  border-left-color: #3b82f6;
-}
-
-.loopin-a11y-violation-header {
+.loopin-dialog-title {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 8px;
-}
-
-.loopin-a11y-impact {
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.loopin-a11y-impact.critical {
-  background: #ef4444;
-  color: #fff;
-}
-
-.loopin-a11y-impact.serious {
-  background: #f97316;
-  color: #fff;
-}
-
-.loopin-a11y-impact.moderate {
-  background: #f59e0b;
-  color: #000;
-}
-
-.loopin-a11y-impact.minor {
-  background: #3b82f6;
-  color: #fff;
-}
-
-.loopin-a11y-id {
-  color: #71717a;
-  font-size: 11px;
-  font-family: 'SF Mono', Monaco, monospace;
-}
-
-.loopin-a11y-help {
   color: #fafafa;
   font-size: 13px;
   font-weight: 500;
-  margin: 0 0 6px 0;
 }
 
-.loopin-a11y-description {
-  color: #a1a1aa;
-  font-size: 12px;
-  margin: 0 0 8px 0;
-  line-height: 1.4;
+.loopin-dialog-title svg {
+  color: #635bff;
 }
 
-.loopin-a11y-fix {
-  background: #1a1a2e;
-  padding: 10px;
+.loopin-dialog-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.loopin-dialog-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.loopin-dialog-body {
+  padding: 16px 20px;
+}
+
+.loopin-dialog-element-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.loopin-dialog-element-tag {
+  background: rgba(99, 91, 255, 0.15);
+  color: #a5b4fc;
+  padding: 4px 10px;
   border-radius: 6px;
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.loopin-dialog-element-selector {
+  color: rgba(255, 255, 255, 0.3);
+  font-family: 'SF Mono', Monaco, monospace;
   font-size: 11px;
-  color: #d4d4d8;
-  margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 250px;
+}
+
+.loopin-dialog-element-size {
+  color: rgba(255, 255, 255, 0.2);
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 11px;
+  margin-left: auto;
+}
+
+.loopin-dialog-preview {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 16px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.loopin-dialog-preview pre {
+  margin: 0;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  white-space: pre-wrap;
+  word-break: break-all;
   line-height: 1.5;
 }
 
-.loopin-a11y-learn {
-  color: #635bff;
-  font-size: 12px;
-  text-decoration: none;
-}
-
-.loopin-a11y-learn:hover {
-  text-decoration: underline;
-}
-
-.loopin-a11y-panel-footer {
-  padding: 12px;
-  background: #09090b;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.loopin-a11y-send-to-claude {
+.loopin-dialog-input-wrap textarea {
   width: 100%;
-  padding: 10px 16px;
-  background: #635bff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 12px;
+  color: #fafafa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s ease;
+  line-height: 1.5;
+  resize: none;
+  outline: none;
+  transition: border-color 0.15s ease;
 }
 
-.loopin-a11y-send-to-claude:hover {
-  background: #7c73ff;
+.loopin-dialog-input-wrap textarea::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.loopin-dialog-input-wrap textarea:focus {
+  border-color: rgba(99, 91, 255, 0.4);
+}
+
+.loopin-dialog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.loopin-dialog-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: none;
+  font-family: inherit;
+}
+
+.loopin-dialog-btn-ghost {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.loopin-dialog-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.loopin-dialog-btn-primary {
+  background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.loopin-dialog-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.loopin-dialog-shortcut {
+  font-size: 10px;
+  opacity: 0.6;
+  font-family: -apple-system, sans-serif;
+}
+
+/* ============================================
+   Element Highlight
+   ============================================ */
+
+.loopin-highlight {
+  outline: 2px solid rgba(99, 91, 255, 0.7) !important;
+  outline-offset: 2px !important;
+  cursor: crosshair !important;
+  transition: outline-color 0.1s ease;
+}
+
+/* ============================================
+   Toast
+   ============================================ */
+
+.loopin-toast {
+  position: fixed;
+  bottom: 70px;
+  right: 24px;
+  z-index: 2147483647;
+  padding: 10px 16px;
+  background: #0a0a0f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.7);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  animation: loopin-toast-in 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.loopin-toast-success {
+  border-color: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+}
+
+.loopin-toast-error {
+  border-color: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+
+@keyframes loopin-toast-in {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
