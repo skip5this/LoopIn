@@ -24,7 +24,7 @@
   "host_permissions": [
     "http://localhost:3456/*",
     "http://127.0.0.1:3456/*",
-    "http://192.168.*.*:3456/*"
+    "http://192.168.4.56:3456/*"
   ],
   "background": {
     "service_worker": "background.js",
