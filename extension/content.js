@@ -58,12 +58,11 @@
           <span class="loopin-bar-label">Capture</span>
         </button>
         <div class="loopin-bar-divider"></div>
-        <button class="loopin-bar-btn" id="loopin-btn-freeze" title="Freeze animations">
+        <button class="loopin-bar-btn loopin-bar-btn-minimize" id="loopin-btn-freeze" title="Freeze animations">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="6" y="4" width="4" height="16"/>
             <rect x="14" y="4" width="4" height="16"/>
           </svg>
-          <span class="loopin-bar-label">Freeze</span>
         </button>
         <div class="loopin-bar-divider"></div>
         <button class="loopin-bar-btn" id="loopin-btn-settings" title="Settings">
