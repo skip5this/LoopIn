@@ -28,6 +28,22 @@
   let animationsFrozen = false;
   let frozenAnimations = [];
 
+  // Proxy fetch through background script to bypass mixed content on HTTPS pages
+  function serverFetch(url, options) {
+    return new Promise((resolve) => {
+      chrome.runtime.sendMessage(
+        { type: 'proxy_fetch', url, options },
+        (response) => {
+          if (chrome.runtime.lastError) {
+            resolve({ ok: false, error: chrome.runtime.lastError.message });
+          } else {
+            resolve(response || { ok: false, error: 'No response' });
+          }
+        }
+      );
+    });
+  }
+
   // ============================================
   // Control Bar (Step 1 + 2)
   // ============================================
@@ -156,9 +172,9 @@
 
   async function checkPendingTasks() {
     try {
-      const res = await fetch(`${CAPTURE_SERVER}/stats`);
+      const res = await serverFetch(`${CAPTURE_SERVER}/stats`);
       if (res.ok) {
-        const stats = await res.json();
+        const stats = res.data;
         updateBadge(stats.pendingTasks || 0);
       }
     } catch (e) {
@@ -216,7 +232,7 @@
     if (!status) return;
 
     try {
-      const res = await fetch(`${CAPTURE_SERVER}/health`);
+      const res = await serverFetch(`${CAPTURE_SERVER}/health`);
       if (res.ok) {
         status.classList.add('loopin-connected');
         status.classList.remove('loopin-disconnected');
@@ -493,7 +509,7 @@
     const data = getElementData(el);
 
     try {
-      const response = await fetch(`${CAPTURE_SERVER}/capture/element`, {
+      const response = await serverFetch(`${CAPTURE_SERVER}/capture/element`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -519,7 +535,7 @@
     };
 
     try {
-      const response = await fetch(`${CAPTURE_SERVER}/capture/task`, {
+      const response = await serverFetch(`${CAPTURE_SERVER}/capture/task`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
