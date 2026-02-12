@@ -32,7 +32,7 @@
   background: #0a0a0f;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   color: rgba(255, 255, 255, 0.5);
   transition: all 0.15s ease;
@@ -42,7 +42,6 @@
 .loopin-bar-collapsed:hover {
   border-color: rgba(99, 91, 255, 0.3);
   color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(99, 91, 255, 0.2);
 }
 
 .loopin-control-bar.loopin-collapsed .loopin-bar-collapsed {
@@ -79,7 +78,7 @@
   background: #0a0a0f;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   padding: 4px;
 }
 
@@ -163,7 +162,7 @@
   background: #0a0a0f;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow: hidden;
   animation: loopin-panel-in 0.15s ease;
@@ -305,7 +304,7 @@
   background: #0a0a0f;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow: hidden;
   animation: loopin-dialog-in 0.15s ease;
