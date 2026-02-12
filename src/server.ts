@@ -149,6 +149,23 @@ app.post("/capture/element", (req: Request, res: Response) => {
   res.json({ ok: true, index: storage.elements.length - 1 });
 });
 
+// Webhook notification to OpenClaw
+async function notifyOpenClaw(task: CapturedTask) {
+  const webhookUrl = process.env.LOOPIN_WEBHOOK_URL || "http://127.0.0.1:18789/api/wake";
+  try {
+    const el = task.element;
+    const summary = `LoopIn capture: <${el.tagName}> "${el.innerText?.slice(0, 50)}" on ${el.url} — Instruction: "${task.instruction}"`;
+    await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: summary, mode: "now" }),
+    });
+    console.error(`[browser-bridge] Notified OpenClaw`);
+  } catch (e) {
+    console.error(`[browser-bridge] Webhook failed (non-critical):`, (e as Error).message);
+  }
+}
+
 // Capture a task with instruction (Stage 2)
 app.post("/capture/task", (req: Request, res: Response) => {
   const task: CapturedTask = {
@@ -161,6 +178,11 @@ app.post("/capture/task", (req: Request, res: Response) => {
 
   console.error(`[browser-bridge] Task: "${task.instruction}" on ${task.element.tagName}`);
   res.json({ ok: true, index: storage.tasks.length - 1 });
+
+  // Notify OpenClaw asynchronously (don't block the response)
+  if (task.instruction) {
+    notifyOpenClaw(task).catch(() => {});
+  }
 });
 
 // Capture console errors (Stage 3)
