@@ -27,6 +27,7 @@
   let hoveredElement = null;
   let animationsFrozen = false;
   let frozenAnimations = [];
+  let settingsPanelOpen = false;
 
   // Proxy fetch through background script to bypass mixed content on HTTPS pages
   function serverFetch(url, options) {
@@ -186,14 +187,34 @@
   // Settings Panel (Step 9)
   // ============================================
 
+  function closeSettings() {
+    const panel = document.getElementById('loopin-settings-panel');
+    if (panel) panel.remove();
+    settingsPanelOpen = false;
+    const settingsBtn = document.getElementById('loopin-btn-settings');
+    if (settingsBtn) settingsBtn.classList.remove('loopin-active');
+  }
+
   function toggleSettings() {
-    let panel = document.getElementById('loopin-settings-panel');
-    if (panel) {
-      panel.remove();
+    // Always clean up any existing panel first
+    const existing = document.getElementById('loopin-settings-panel');
+    if (existing) {
+      existing.remove();
+    }
+
+    // If it was open, just close
+    if (settingsPanelOpen) {
+      settingsPanelOpen = false;
+      const settingsBtn = document.getElementById('loopin-btn-settings');
+      if (settingsBtn) settingsBtn.classList.remove('loopin-active');
       return;
     }
 
-    panel = document.createElement('div');
+    settingsPanelOpen = true;
+    const settingsBtn = document.getElementById('loopin-btn-settings');
+    if (settingsBtn) settingsBtn.classList.add('loopin-active');
+
+    const panel = document.createElement('div');
     panel.id = 'loopin-settings-panel';
     panel.className = 'loopin-settings-panel';
 
@@ -217,7 +238,7 @@
     // Check connection
     checkServerConnection();
 
-    document.getElementById('loopin-settings-close').onclick = () => panel.remove();
+    document.getElementById('loopin-settings-close').onclick = () => closeSettings();
     document.getElementById('loopin-settings-save').onclick = () => {
       const input = document.getElementById('loopin-server-input');
       CAPTURE_SERVER = input.value.trim();
@@ -333,6 +354,19 @@
     const data = getElementData(element);
     const htmlPreview = element.outerHTML.slice(0, 300) + (element.outerHTML.length > 300 ? '...' : '');
 
+    // Build enrichment badges
+    let enrichmentHtml = '';
+    if (data.accessibility) {
+      const a11ySummary = data.accessibility.role || data.accessibility['aria-label'] || 'a11y';
+      enrichmentHtml += `<span class="loopin-dialog-badge loopin-badge-a11y" title="${escapeHtml(JSON.stringify(data.accessibility))}">♿ ${escapeHtml(a11ySummary)}</span>`;
+    }
+    if (data.reactComponents) {
+      enrichmentHtml += `<span class="loopin-dialog-badge loopin-badge-react" title="React component path">⚛ ${escapeHtml(data.reactComponents.join(' → '))}</span>`;
+    }
+    if (data.headingContext) {
+      enrichmentHtml += `<span class="loopin-dialog-badge loopin-badge-context" title="Nearest heading"># ${escapeHtml(data.headingContext.text.slice(0, 40))}</span>`;
+    }
+
     overlay.innerHTML = `
       <div class="loopin-dialog">
         <div class="loopin-dialog-header">
@@ -351,6 +385,7 @@
             <div class="loopin-dialog-element-selector">${escapeHtml(data.selector)}</div>
             <div class="loopin-dialog-element-size">${data.boundingRect.width} × ${data.boundingRect.height}px</div>
           </div>
+          ${enrichmentHtml ? `<div class="loopin-dialog-enrichment">${enrichmentHtml}</div>` : ''}
           <div class="loopin-dialog-preview">
             <pre>${escapeHtml(htmlPreview)}</pre>
           </div>
@@ -480,15 +515,114 @@
     return styles;
   }
 
+  function getAccessibilityData(el) {
+    const a11y = {};
+    const role = el.getAttribute('role');
+    if (role) a11y.role = role;
+    
+    const ariaAttrs = ['aria-label', 'aria-labelledby', 'aria-describedby', 'aria-expanded',
+      'aria-hidden', 'aria-live', 'aria-required', 'aria-disabled', 'aria-checked',
+      'aria-selected', 'aria-haspopup', 'aria-controls', 'aria-pressed'];
+    ariaAttrs.forEach(attr => {
+      const val = el.getAttribute(attr);
+      if (val) a11y[attr] = val;
+    });
+    
+    if (el.tagName === 'IMG' || el.tagName === 'INPUT') {
+      const alt = el.getAttribute('alt');
+      if (alt !== null) a11y.alt = alt;
+    }
+    if (el.tabIndex >= 0) a11y.tabIndex = el.tabIndex;
+    if (el.title) a11y.title = el.title;
+    
+    return Object.keys(a11y).length > 0 ? a11y : null;
+  }
+
+  function getDataAttributes(el) {
+    const data = {};
+    Array.from(el.attributes).forEach(attr => {
+      if (attr.name.startsWith('data-') && !attr.name.startsWith('data-loopin')) {
+        data[attr.name] = attr.value;
+      }
+    });
+    return Object.keys(data).length > 0 ? data : null;
+  }
+
+  function getHeadingContext(el) {
+    let node = el;
+    while (node && node !== document.body) {
+      // Check previous siblings and parent for headings
+      let sibling = node.previousElementSibling;
+      while (sibling) {
+        if (/^H[1-6]$/.test(sibling.tagName)) {
+          return { tag: sibling.tagName.toLowerCase(), text: (sibling.innerText || '').slice(0, 100) };
+        }
+        sibling = sibling.previousElementSibling;
+      }
+      node = node.parentElement;
+    }
+    // Fallback: find nearest heading in DOM
+    const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    let closest = null;
+    let closestDist = Infinity;
+    const elRect = el.getBoundingClientRect();
+    headings.forEach(h => {
+      const hRect = h.getBoundingClientRect();
+      const dist = Math.abs(hRect.top - elRect.top);
+      if (dist < closestDist && hRect.top <= elRect.top) {
+        closestDist = dist;
+        closest = h;
+      }
+    });
+    if (closest) {
+      return { tag: closest.tagName.toLowerCase(), text: (closest.innerText || '').slice(0, 100) };
+    }
+    return null;
+  }
+
+  function getReactComponentHierarchy(el) {
+    try {
+      // Check if React DevTools hook is available
+      if (!window.__REACT_DEVTOOLS_GLOBAL_HOOK__) return null;
+
+      const fiberKey = Object.keys(el).find(k => k.startsWith('__reactFiber$') || k.startsWith('__reactInternalInstance$'));
+      if (!fiberKey) return null;
+
+      let fiber = el[fiberKey];
+      const components = [];
+      
+      while (fiber && components.length < 10) {
+        if (fiber.type && typeof fiber.type === 'function') {
+          const name = fiber.type.displayName || fiber.type.name;
+          if (name && !name.startsWith('_')) {
+            components.unshift(name);
+          }
+        } else if (fiber.type && typeof fiber.type === 'object' && fiber.type.$$typeof) {
+          // Forward ref, memo, etc.
+          const inner = fiber.type.render || fiber.type.type;
+          if (inner) {
+            const name = inner.displayName || inner.name;
+            if (name) components.unshift(name);
+          }
+        }
+        fiber = fiber.return;
+      }
+
+      return components.length > 0 ? components : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   function getElementData(el) {
     const rect = el.getBoundingClientRect();
-    return {
+    const data = {
       tagName: el.tagName.toLowerCase(),
       id: el.id || '',
       className: el.className || '',
       selector: getUniqueSelector(el),
       outerHTML: el.outerHTML.slice(0, 3000),
-      innerText: (el.innerText || '').slice(0, 500),
+      innerText: (el.innerText || '').slice(0, 200),
       computedStyles: getRelevantStyles(el),
       boundingRect: {
         top: Math.round(rect.top),
@@ -499,6 +633,21 @@
       url: window.location.href,
       title: document.title
     };
+
+    // Enriched data
+    const a11y = getAccessibilityData(el);
+    if (a11y) data.accessibility = a11y;
+
+    const dataAttrs = getDataAttributes(el);
+    if (dataAttrs) data.dataAttributes = dataAttrs;
+
+    const heading = getHeadingContext(el);
+    if (heading) data.headingContext = heading;
+
+    const reactComponents = getReactComponentHierarchy(el);
+    if (reactComponents) data.reactComponents = reactComponents;
+
+    return data;
   }
 
   // ============================================

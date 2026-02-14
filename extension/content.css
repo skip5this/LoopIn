@@ -395,6 +395,43 @@
   margin-left: auto;
 }
 
+/* Enrichment badges */
+.loopin-dialog-enrichment {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.loopin-dialog-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 500;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.loopin-badge-a11y {
+  background: rgba(34, 197, 94, 0.1);
+  color: #86efac;
+}
+
+.loopin-badge-react {
+  background: rgba(97, 218, 251, 0.1);
+  color: #7dd3fc;
+}
+
+.loopin-badge-context {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.4);
+}
+
 .loopin-dialog-preview {
   background: rgba(255, 255, 255, 0.02);
   border: none;
