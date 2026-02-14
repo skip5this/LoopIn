@@ -29,7 +29,13 @@ interface CapturedElement {
     height: number;
   };
   url: string;
+  title?: string;
   timestamp: number;
+  // Enriched data
+  accessibility?: Record<string, string>;
+  dataAttributes?: Record<string, string>;
+  headingContext?: { tag: string; text: string };
+  reactComponents?: string[];
 }
 
 interface CapturedTask {
