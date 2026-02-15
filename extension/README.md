@@ -1,52 +1,76 @@
 # LoopIn Chrome Extension
 
-A Chrome extension that captures DOM elements and sends them to Claude Code via MCP.
+A Chrome extension that captures DOM elements, text selections, and rich context — then sends it all to your AI coding agent via MCP.
 
-## Development Installation
+## Features
 
-1. Open Chrome and navigate to `chrome://extensions/`
-2. Enable "Developer mode" (toggle in top right)
-3. Click "Load unpacked"
-4. Select this `extension` folder
+- **Element Capture** — Click any element to capture HTML, CSS, selectors, and computed styles
+- **Text Selection** — Highlight text passages and send them with annotations
+- **Data Enrichment** — Automatically captures accessibility attributes, React component hierarchy, heading context, and data attributes
+- **Freeze Animations** — Pause CSS animations, transitions, and videos to capture exact states
+- **Task List** — Track all captures in a live session panel
+- **Settings** — Configure server URL with live connection status
+- **MetaLab-inspired UI** — Dark, premium control bar that stays out of your way
+
+## Installation
+
+1. Open Chrome → `chrome://extensions/`
+2. Enable "Developer mode" (top right)
+3. Click "Load unpacked" → select this `extension/` folder
 
 ## Usage
 
-1. Click the LoopIn extension icon in your toolbar
-2. Click "Enable Capture Mode"
-3. Click any element on the page
-4. Add an optional instruction
-5. Ask Claude Code about your capture!
+### Element Capture
+1. Click **Capture** in the control bar (or press `⌘⇧C`)
+2. Hover over elements — they highlight with a purple outline
+3. Click to capture → add an optional instruction → Send
 
-### Keyboard Shortcuts
+### Text Selection
+1. Click the **T** button in the control bar
+2. Highlight any text on the page
+3. Release to capture → add an instruction → Send
 
-- **Ctrl+Shift+C** (Cmd+Shift+C on Mac): Toggle capture mode
-- **Escape**: Exit capture mode
+### Freeze Animations
+Click the **⏸** button to pause all CSS animations, transitions, and videos. Click again to resume.
+
+### Task List
+Click the **list** button to see all recent captures in the current session. Clear all or review what you've sent.
+
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `⌘⇧C` / `Ctrl+Shift+C` | Toggle element capture mode |
+| `Escape` | Exit capture mode / close panels |
+| `⌘Enter` | Send from capture dialog |
+
+## What Gets Captured
+
+| Data | Description |
+|------|-------------|
+| HTML | Tag, classes, truncated outerHTML |
+| CSS | Computed colors, spacing, layout, typography |
+| Selector | Unique CSS path to the element |
+| Accessibility | ARIA roles, labels, alt text, tab index |
+| React Components | Component hierarchy via fiber tree walk |
+| Context | Nearest heading, data attributes |
+| Bounding Rect | Position and dimensions |
+| Page | URL and document title |
 
 ## Configuration
 
-The extension connects to the LoopIn server at `http://localhost:3456` by default.
+Default server: `http://localhost:3456`
 
-You can change the server URL in the extension popup's settings section.
+Change via the **⚙** settings panel in the control bar. Green dot = connected, red = disconnected.
 
-## Files
+## Architecture
 
-- `manifest.json` - Extension configuration
-- `content.js` - Injected into pages, handles element capture
-- `content.css` - Styles for capture UI (highlight, dialog, toasts)
-- `popup.html` / `popup.js` - Extension popup UI
-- `background.js` - Service worker for badge updates and shortcuts
+- `content.js` — Injected into pages. Control bar, capture logic, enrichment, dialogs.
+- `content.css` — MetaLab-inspired dark theme styles.
+- `background.js` — Service worker. Proxies fetch requests to bypass mixed content (HTTPS→HTTP).
+- `popup.html/js` — Extension popup (minimal — control bar is the main UI).
+- `a11y.js` — Accessibility audit mode (axe-core integration).
 
-## Building for Production
+## MCP Server
 
-TODO: Add build script for:
-- Minification
-- Icon generation
-- Chrome Web Store packaging
-
-## Icons
-
-Icons are currently using Chrome's default puzzle piece. To add custom icons:
-
-1. Create PNG files at 16x16, 48x48, and 128x128 pixels
-2. Save as `icons/icon16.png`, `icons/icon48.png`, `icons/icon128.png`
-3. Uncomment the icon references in `manifest.json`
+The extension sends captures to a local MCP server. See the root `server/` directory for the MCP server that exposes captures as tools to Claude Code, Cursor, or any MCP-compatible agent.
