@@ -1141,34 +1141,7 @@
       sendResponse({ ok: true });
     }
     
-    // A11y mode messages
-    else if (message.type === 'toggle_a11y') {
-      if (window.__loopInA11y) {
-        const isActive = window.__loopInA11y.toggleA11yMode();
-        const violations = window.__loopInA11y.getViolations();
-        sendResponse({ a11yMode: isActive, violations });
-      } else {
-        sendResponse({ a11yMode: false, error: 'A11y module not loaded' });
-      }
-    } else if (message.type === 'toggle_watch') {
-      if (window.__loopInA11y) {
-        const isActive = window.__loopInA11y.toggleWatchMode();
-        const violations = window.__loopInA11y.getViolations();
-        sendResponse({ watchMode: isActive, violations });
-      } else {
-        sendResponse({ watchMode: false, error: 'A11y module not loaded' });
-      }
-    } else if (message.type === 'get_a11y_state') {
-      if (window.__loopInA11y) {
-        sendResponse({
-          a11yMode: window.__loopInA11y.isA11yMode(),
-          watchMode: window.__loopInA11y.isWatchMode(),
-          violations: window.__loopInA11y.getViolations()
-        });
-      } else {
-        sendResponse({ a11yMode: false, watchMode: false, violations: [] });
-      }
-    }
+    // (A11y mode removed — see feature/a11y-copilot branch)
     
     return true;
   });
