@@ -685,7 +685,10 @@
             <div class="loopin-dialog-element-size">${data.boundingRect.width} × ${data.boundingRect.height}px</div>
           </div>
           ${enrichmentHtml ? `<div class="loopin-dialog-enrichment">${enrichmentHtml}</div>` : ''}
-          <div class="loopin-dialog-preview">
+          <button class="loopin-dialog-view-source" id="loopin-view-source">
+            <span class="loopin-chevron">▶</span> View source
+          </button>
+          <div class="loopin-dialog-preview" id="loopin-source-block" style="display:none">
             <pre>${escapeHtml(htmlPreview)}</pre>
           </div>
           <div class="loopin-dialog-input-wrap">
@@ -706,6 +709,15 @@
 
     const textarea = overlay.querySelector('#loopin-instruction');
     setTimeout(() => textarea.focus(), 100);
+
+    // View source toggle
+    const viewSourceBtn = overlay.querySelector('#loopin-view-source');
+    const sourceBlock = overlay.querySelector('#loopin-source-block');
+    viewSourceBtn.onclick = () => {
+      const isHidden = sourceBlock.style.display === 'none';
+      sourceBlock.style.display = isHidden ? 'block' : 'none';
+      viewSourceBtn.classList.toggle('loopin-expanded', isHidden);
+    };
 
     overlay.querySelector('#loopin-dialog-close').onclick = () => overlay.remove();
 
