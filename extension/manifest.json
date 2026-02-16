@@ -9,12 +9,11 @@
     "128": "icons/icon128.png"
   },
   "action": {
-    "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png"
     },
-    "default_title": "LoopIn"
+    "default_title": "LoopIn — Toggle Capture Mode"
   },
   "permissions": [
     "activeTab",
