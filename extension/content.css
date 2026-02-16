@@ -336,7 +336,7 @@
   max-width: 90vw;
   background: #0a0a0f;
   border-radius: 16px;
-  border: none;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
   box-shadow: none;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow: hidden;
@@ -463,6 +463,38 @@
 .loopin-badge-context {
   background: rgba(255, 255, 255, 0.04);
   color: rgba(255, 255, 255, 0.4);
+}
+
+/* View source toggle */
+.loopin-dialog-view-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin-bottom: 12px;
+  font-family: inherit;
+}
+
+.loopin-dialog-view-source:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.loopin-dialog-view-source .loopin-chevron {
+  transition: transform 0.15s ease;
+  font-size: 10px;
+}
+
+.loopin-dialog-view-source.loopin-expanded .loopin-chevron {
+  transform: rotate(90deg);
 }
 
 .loopin-dialog-preview {
