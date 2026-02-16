@@ -87,6 +87,17 @@ chrome.commands?.onCommand?.addListener(async (command) => {
   }
 });
 
+// Clicking the extension icon toggles capture mode (no popup)
+chrome.action.onClicked.addListener(async (tab) => {
+  if (tab?.id) {
+    try {
+      await chrome.tabs.sendMessage(tab.id, { type: 'toggle' });
+    } catch (e) {
+      console.log('Could not toggle capture mode:', e);
+    }
+  }
+});
+
 // Reset badge when tab is updated
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete') {

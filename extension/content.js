@@ -518,6 +518,10 @@
         <button class="loopin-settings-close" id="loopin-settings-close">×</button>
       </div>
       <div class="loopin-settings-body">
+        <div class="loopin-settings-status-row" id="loopin-connection-row">
+          <span class="loopin-settings-status-dot" id="loopin-server-dot"></span>
+          <span class="loopin-settings-status-text" id="loopin-server-status-text">Checking...</span>
+        </div>
         <label class="loopin-settings-label">Server URL</label>
         <div class="loopin-settings-row">
           <input type="text" class="loopin-settings-input" id="loopin-server-input" value="${CAPTURE_SERVER}" placeholder="http://localhost:3456" />
@@ -544,21 +548,22 @@
 
   async function checkServerConnection() {
     const status = document.getElementById('loopin-server-status');
-    if (!status) return;
+    const dot = document.getElementById('loopin-server-dot');
+    const text = document.getElementById('loopin-server-status-text');
 
     try {
       const res = await serverFetch(`${CAPTURE_SERVER}/health`);
       if (res.ok) {
-        status.classList.add('loopin-connected');
-        status.classList.remove('loopin-disconnected');
-        status.title = 'Connected';
+        if (status) { status.classList.add('loopin-connected'); status.classList.remove('loopin-disconnected'); status.title = 'Connected'; }
+        if (dot) { dot.classList.add('loopin-connected'); dot.classList.remove('loopin-disconnected'); }
+        if (text) text.textContent = 'Connected';
       } else {
         throw new Error('Not ok');
       }
     } catch (e) {
-      status.classList.add('loopin-disconnected');
-      status.classList.remove('loopin-connected');
-      status.title = 'Disconnected';
+      if (status) { status.classList.add('loopin-disconnected'); status.classList.remove('loopin-connected'); status.title = 'Disconnected'; }
+      if (dot) { dot.classList.add('loopin-disconnected'); dot.classList.remove('loopin-connected'); }
+      if (text) text.textContent = 'Not connected';
     }
   }
 
