@@ -336,23 +336,7 @@
   </div>
 
   <div class="content">
-    <!-- Mode Tabs -->
-    <div class="mode-tabs">
-      <button class="mode-tab capture active" data-mode="capture">
-        <span class="mode-tab-icon">🔵</span>
-        <span>Capture</span>
-      </button>
-      <button class="mode-tab a11y" data-mode="a11y">
-        <span class="mode-tab-icon">🟡</span>
-        <span>A11y</span>
-      </button>
-      <button class="mode-tab watch" data-mode="watch">
-        <span class="mode-tab-icon">🟢</span>
-        <span>Watch</span>
-      </button>
-    </div>
-
-    <!-- Capture Mode Panel -->
+    <!-- Capture Panel -->
     <div id="capture-panel" class="mode-panel">
       <div class="mode-description">
         <strong>Capture Mode:</strong> Click any element to capture it and send to Claude Code with instructions.
@@ -374,57 +358,6 @@
           <circle cx="12" cy="12" r="3"/>
         </svg>
         Enable Capture Mode
-      </button>
-    </div>
-
-    <!-- A11y Mode Panel -->
-    <div id="a11y-panel" class="mode-panel hidden">
-      <div class="mode-description">
-        <strong>A11y Mode:</strong> Scan page for accessibility issues. Click badges to see details and fixes.
-      </div>
-
-      <div class="a11y-stats">
-        <div class="a11y-stat critical">
-          <div class="a11y-stat-value" id="critical-count">-</div>
-          <div class="a11y-stat-label">Critical</div>
-        </div>
-        <div class="a11y-stat serious">
-          <div class="a11y-stat-value" id="serious-count">-</div>
-          <div class="a11y-stat-label">Serious</div>
-        </div>
-        <div class="a11y-stat moderate">
-          <div class="a11y-stat-value" id="moderate-count">-</div>
-          <div class="a11y-stat-label">Moderate</div>
-        </div>
-        <div class="a11y-stat minor">
-          <div class="a11y-stat-value" id="minor-count">-</div>
-          <div class="a11y-stat-label">Minor</div>
-        </div>
-      </div>
-
-      <button class="btn btn-a11y" id="toggle-a11y-btn">
-        🔍 Run A11y Scan
-      </button>
-    </div>
-
-    <!-- Watch Mode Panel -->
-    <div id="watch-panel" class="mode-panel hidden">
-      <div class="mode-description">
-        <strong>Watch Mode:</strong> Continuously monitors the page for accessibility issues as you work. Get notified when problems appear.
-      </div>
-
-      <div class="status-card">
-        <div class="status-row">
-          <span class="status-label">Monitoring</span>
-          <span class="status-value">
-            <span class="status-dot" id="watch-dot"></span>
-            <span id="watch-status">Off</span>
-          </span>
-        </div>
-      </div>
-
-      <button class="btn btn-watch" id="toggle-watch-btn">
-        👁️ Start Watching
       </button>
     </div>
 
