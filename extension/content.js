@@ -26,8 +26,7 @@
   let captureMode = false;
   let textSelectMode = false;
   let hoveredElement = null;
-  let animationsFrozen = false;
-  let frozenAnimations = [];
+  let videosPaused = false;
   let settingsPanelOpen = false;
   let taskListOpen = false;
   let recentCaptures = [];
@@ -49,11 +48,10 @@
   }
 
   // ============================================
-  // Control Bar (Step 1 + 2)
+  // Control Bar
   // ============================================
 
   function createControlBar() {
-    // Remove old indicator if it exists
     const oldIndicator = document.getElementById('loopin-indicator');
     if (oldIndicator) oldIndicator.remove();
 
@@ -73,49 +71,30 @@
         <span class="loopin-bar-badge" id="loopin-badge" style="display:none">0</span>
       </div>
       <div class="loopin-bar-expanded" id="loopin-bar-expanded">
-        <button class="loopin-bar-btn" id="loopin-btn-capture" title="Toggle capture mode (⌘⇧C)">
+        <button class="loopin-bar-btn loopin-bar-btn-capture" id="loopin-btn-capture" title="Toggle capture mode (⌘⇧C)">
           <span class="loopin-capture-dot" id="loopin-capture-dot"></span>
           <span class="loopin-bar-label">Capture</span>
         </button>
-        <div class="loopin-bar-divider"></div>
-        <button class="loopin-bar-btn" id="loopin-btn-text" title="Select text mode">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="4 7 4 4 20 4 20 7"/>
-            <line x1="9" y1="20" x2="15" y2="20"/>
-            <line x1="12" y1="4" x2="12" y2="20"/>
+        <button class="loopin-bar-btn" id="loopin-btn-pause" title="Pause/resume videos">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+            <rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>
           </svg>
         </button>
-        <div class="loopin-bar-divider"></div>
         <button class="loopin-bar-btn" id="loopin-btn-tasks" title="Recent captures">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="8" y1="6" x2="21" y2="6"/>
-            <line x1="8" y1="12" x2="21" y2="12"/>
-            <line x1="8" y1="18" x2="21" y2="18"/>
-            <line x1="3" y1="6" x2="3.01" y2="6"/>
-            <line x1="3" y1="12" x2="3.01" y2="12"/>
-            <line x1="3" y1="18" x2="3.01" y2="18"/>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/>
           </svg>
           <span class="loopin-bar-badge loopin-tasks-badge" id="loopin-tasks-badge" style="display:none">0</span>
         </button>
-        <div class="loopin-bar-divider"></div>
-        <button class="loopin-bar-btn loopin-bar-btn-minimize" id="loopin-btn-freeze" title="Freeze animations">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="6" y="4" width="4" height="16"/>
-            <rect x="14" y="4" width="4" height="16"/>
-          </svg>
-        </button>
-        <div class="loopin-bar-divider"></div>
         <button class="loopin-bar-btn" id="loopin-btn-settings" title="Settings">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="3"/>
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
           </svg>
         </button>
-        <div class="loopin-bar-divider"></div>
-        <button class="loopin-bar-btn loopin-bar-btn-minimize" id="loopin-btn-minimize" title="Minimize">
+        <button class="loopin-bar-btn" id="loopin-btn-minimize" title="Minimize">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 3 21 3 21 9"/>
-            <polyline points="9 21 3 21 3 15"/>
+            <polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/>
           </svg>
         </button>
       </div>
@@ -126,9 +105,8 @@
     // Event listeners
     document.getElementById('loopin-bar-collapsed').onclick = () => expandBar();
     document.getElementById('loopin-btn-capture').onclick = () => toggle();
-    document.getElementById('loopin-btn-text').onclick = () => toggleTextSelect();
+    document.getElementById('loopin-btn-pause').onclick = () => toggleVideoPause();
     document.getElementById('loopin-btn-tasks').onclick = () => toggleTaskList();
-    document.getElementById('loopin-btn-freeze').onclick = () => toggleFreezeAnimations();
     document.getElementById('loopin-btn-settings').onclick = () => toggleSettings();
     document.getElementById('loopin-btn-minimize').onclick = () => collapseBar();
 
@@ -136,9 +114,7 @@
       bar.classList.add('loopin-collapsed');
     }
 
-    // Check server for pending tasks
     checkPendingTasks();
-
     return bar;
   }
 
@@ -173,21 +149,25 @@
       }
     }
 
-    const freezeBtn = document.getElementById('loopin-btn-freeze');
-    if (freezeBtn) {
-      if (animationsFrozen) {
-        freezeBtn.classList.add('loopin-active');
+    const pauseBtn = document.getElementById('loopin-btn-pause');
+    if (pauseBtn) {
+      if (videosPaused) {
+        pauseBtn.classList.add('loopin-active');
+        // Swap to play icon
+        pauseBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
       } else {
-        freezeBtn.classList.remove('loopin-active');
+        pauseBtn.classList.remove('loopin-active');
+        // Swap to pause icon
+        pauseBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>`;
       }
     }
 
-    const textBtn = document.getElementById('loopin-btn-text');
-    if (textBtn) {
-      if (textSelectMode) {
-        textBtn.classList.add('loopin-active');
+    const settingsBtn = document.getElementById('loopin-btn-settings');
+    if (settingsBtn) {
+      if (settingsPanelOpen) {
+        settingsBtn.classList.add('loopin-active');
       } else {
-        textBtn.classList.remove('loopin-active');
+        settingsBtn.classList.remove('loopin-active');
       }
     }
   }
@@ -213,19 +193,30 @@
         updateBadge(stats.pendingTasks || 0);
       }
     } catch (e) {
-      // Server not running, that's fine
+      // Server not running
     }
   }
 
   // ============================================
-  // Text Selection Capture (Step 5)
+  // Video Pause
+  // ============================================
+
+  function toggleVideoPause() {
+    const videos = document.querySelectorAll('video');
+    videosPaused = !videosPaused;
+    videos.forEach(v => videosPaused ? v.pause() : v.play());
+    updateControlBar();
+    showToast(videosPaused ? 'Videos paused' : 'Videos resumed', 'info');
+  }
+
+  // ============================================
+  // Text Selection Capture
   // ============================================
 
   function toggleTextSelect() {
     if (textSelectMode) {
       disableTextSelect();
     } else {
-      // Disable element capture if active
       if (captureMode) disable();
       enableTextSelect();
     }
@@ -256,7 +247,6 @@
     const text = selection.toString().trim();
     if (!text || text.length < 2) return;
 
-    // Get the container element for context
     const range = selection.getRangeAt(0);
     const container = range.commonAncestorContainer.nodeType === Node.TEXT_NODE
       ? range.commonAncestorContainer.parentElement
@@ -274,34 +264,23 @@
     overlay.innerHTML = `
       <div class="loopin-dialog">
         <div class="loopin-dialog-header">
-          <div class="loopin-dialog-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="4 7 4 4 20 4 20 7"/>
-              <line x1="9" y1="20" x2="15" y2="20"/>
-              <line x1="12" y1="4" x2="12" y2="20"/>
-            </svg>
-            <span>Text Capture</span>
+          <div class="loopin-dialog-element-info" style="margin:0">
+            <div class="loopin-dialog-element-tag">TXT</div>
+            <div class="loopin-dialog-element-size">${selectedText.length} chars</div>
           </div>
           <button class="loopin-dialog-close" id="loopin-dialog-close">×</button>
         </div>
         <div class="loopin-dialog-body">
-          <div class="loopin-dialog-element-info">
-            <div class="loopin-dialog-element-tag">Selected text</div>
-            <div class="loopin-dialog-element-size">${selectedText.length} chars</div>
-          </div>
           <div class="loopin-dialog-preview">
             <pre>"${escapeHtml(truncated)}"</pre>
           </div>
           <div class="loopin-dialog-input-wrap">
-            <textarea id="loopin-instruction" placeholder="What should change about this text? e.g., rephrase this, fix the tone, make it shorter..." rows="3"></textarea>
+            <textarea id="loopin-instruction" placeholder='Add context... "Make this green"' rows="3"></textarea>
           </div>
         </div>
         <div class="loopin-dialog-footer">
-          <button class="loopin-dialog-btn loopin-dialog-btn-ghost" id="loopin-capture-only">Capture only</button>
-          <button class="loopin-dialog-btn loopin-dialog-btn-primary" id="loopin-send">
-            Send
-            <span class="loopin-dialog-shortcut">⌘↵</span>
-          </button>
+          <button class="loopin-dialog-btn loopin-dialog-btn-ghost" id="loopin-capture-only">Capture</button>
+          <button class="loopin-dialog-btn loopin-dialog-btn-primary" id="loopin-send">Send</button>
         </div>
       </div>
     `;
@@ -332,9 +311,7 @@
 
     overlay.querySelector('#loopin-send').onclick = async () => {
       const instruction = textarea.value.trim();
-      if (instruction) {
-        captureData.instruction = instruction;
-      }
+      if (instruction) captureData.instruction = instruction;
       await sendTextCapture(captureData);
       overlay.remove();
     };
@@ -376,7 +353,7 @@
   }
 
   // ============================================
-  // Task List Panel (Step 10)
+  // Task List Panel
   // ============================================
 
   function addToRecentCaptures(item) {
@@ -388,12 +365,21 @@
 
   function updateTasksBadge() {
     const badge = document.getElementById('loopin-tasks-badge');
+    const tasksBtn = document.getElementById('loopin-btn-tasks');
     if (badge) {
       if (recentCaptures.length > 0) {
         badge.textContent = recentCaptures.length;
         badge.style.display = 'flex';
       } else {
         badge.style.display = 'none';
+      }
+    }
+    // Update tasks button active state
+    if (tasksBtn) {
+      if (taskListOpen) {
+        tasksBtn.classList.add('loopin-active');
+      } else {
+        tasksBtn.classList.remove('loopin-active');
       }
     }
   }
@@ -404,14 +390,12 @@
 
     if (taskListOpen) {
       taskListOpen = false;
-      const btn = document.getElementById('loopin-btn-tasks');
-      if (btn) btn.classList.remove('loopin-active');
+      updateTasksBadge();
       return;
     }
 
     taskListOpen = true;
-    const btn = document.getElementById('loopin-btn-tasks');
-    if (btn) btn.classList.add('loopin-active');
+    updateTasksBadge();
     renderTaskList();
   }
 
@@ -424,89 +408,68 @@
     panel.className = 'loopin-task-list-panel';
 
     const items = recentCaptures.length === 0
-      ? '<div class="loopin-task-empty">No captures yet. Click elements or select text to start.</div>'
+      ? '<div class="loopin-task-empty">No captures yet.</div>'
       : recentCaptures.map((c, i) => {
           const icon = c.type === 'text' ? 'T' : '◻';
           const label = c.type === 'text'
             ? `"${escapeHtml((c.text || '').slice(0, 50))}${(c.text || '').length > 50 ? '...' : ''}"`
             : `<${escapeHtml(c.tagName || 'element')}>`;
-          const instruction = c.instruction ? `<div class="loopin-task-instruction">${escapeHtml(c.instruction.slice(0, 60))}</div>` : '';
-          const timeAgo = formatTimeAgo(c.time);
           return `
-            <div class="loopin-task-item" data-index="${i}">
+            <div class="loopin-task-item">
               <span class="loopin-task-icon">${icon}</span>
               <div class="loopin-task-content">
                 <div class="loopin-task-label">${label}</div>
-                ${instruction}
               </div>
-              <span class="loopin-task-time">${timeAgo}</span>
             </div>
           `;
         }).join('');
 
     panel.innerHTML = `
       <div class="loopin-settings-header">
-        <span>Recent Captures (${recentCaptures.length})</span>
-        <div style="display:flex;gap:4px">
-          ${recentCaptures.length > 0 ? '<button class="loopin-settings-close" id="loopin-tasks-clear" title="Clear all">🗑</button>' : ''}
-          <button class="loopin-settings-close" id="loopin-tasks-close">×</button>
-        </div>
+        <span>Captures (${recentCaptures.length})</span>
+        ${recentCaptures.length > 0 ? '<button class="loopin-task-send-all" id="loopin-tasks-send-all">Send all</button>' : ''}
       </div>
       <div class="loopin-task-list-body">${items}</div>
     `;
 
     document.body.appendChild(panel);
 
-    document.getElementById('loopin-tasks-close').onclick = () => toggleTaskList();
-    const clearBtn = document.getElementById('loopin-tasks-clear');
-    if (clearBtn) {
-      clearBtn.onclick = () => {
+    const sendAllBtn = document.getElementById('loopin-tasks-send-all');
+    if (sendAllBtn) {
+      sendAllBtn.onclick = () => {
         recentCaptures = [];
+        taskListOpen = false;
+        const existingPanel = document.getElementById('loopin-task-list-panel');
+        if (existingPanel) existingPanel.remove();
         updateTasksBadge();
-        renderTaskList();
-        showToast('Captures cleared', 'info');
+        showToast('All captures sent', 'success');
       };
     }
   }
 
-  function formatTimeAgo(ts) {
-    const diff = Math.floor((Date.now() - ts) / 1000);
-    if (diff < 60) return 'now';
-    if (diff < 3600) return `${Math.floor(diff / 60)}m`;
-    if (diff < 86400) return `${Math.floor(diff / 3600)}h`;
-    return `${Math.floor(diff / 86400)}d`;
-  }
-
   // ============================================
-  // Settings Panel (Step 9)
+  // Settings Panel (Connect to MCP)
   // ============================================
 
   function closeSettings() {
     const panel = document.getElementById('loopin-settings-panel');
     if (panel) panel.remove();
     settingsPanelOpen = false;
-    const settingsBtn = document.getElementById('loopin-btn-settings');
-    if (settingsBtn) settingsBtn.classList.remove('loopin-active');
+    updateControlBar();
   }
 
   function toggleSettings() {
-    // Always clean up any existing panel first
     const existing = document.getElementById('loopin-settings-panel');
-    if (existing) {
-      existing.remove();
-    }
+    if (existing) existing.remove();
 
-    // If it was open, just close
     if (settingsPanelOpen) {
       settingsPanelOpen = false;
-      const settingsBtn = document.getElementById('loopin-btn-settings');
-      if (settingsBtn) settingsBtn.classList.remove('loopin-active');
+      updateControlBar();
       return;
     }
 
     settingsPanelOpen = true;
-    const settingsBtn = document.getElementById('loopin-btn-settings');
-    if (settingsBtn) settingsBtn.classList.add('loopin-active');
+    updateControlBar();
 
     const panel = document.createElement('div');
     panel.id = 'loopin-settings-panel';
@@ -514,7 +477,10 @@
 
     panel.innerHTML = `
       <div class="loopin-settings-header">
-        <span>Settings</span>
+        <div>
+          <div>Connect to MCP</div>
+          <div class="loopin-settings-subtitle">Link LoopIn to your coding agent</div>
+        </div>
         <button class="loopin-settings-close" id="loopin-settings-close">×</button>
       </div>
       <div class="loopin-settings-body">
@@ -522,105 +488,41 @@
           <span class="loopin-settings-status-dot" id="loopin-server-dot"></span>
           <span class="loopin-settings-status-text" id="loopin-server-status-text">Checking...</span>
         </div>
-        <label class="loopin-settings-label">Server URL</label>
-        <div class="loopin-settings-row">
-          <input type="text" class="loopin-settings-input" id="loopin-server-input" value="${CAPTURE_SERVER}" placeholder="http://localhost:3456" />
-          <span class="loopin-settings-status" id="loopin-server-status">●</span>
+        <p class="loopin-settings-description">Add LoopIn as an MCP server in your agent's config to send captures directly.</p>
+        <div class="loopin-settings-server-box">
+          <div class="loopin-settings-server-label">Server address</div>
+          <div class="loopin-settings-server-url" id="loopin-server-display">${CAPTURE_SERVER.replace('http://', 'ws://').replace(':3456', ':3456')}</div>
         </div>
-        <button class="loopin-settings-save" id="loopin-settings-save">Save</button>
+        <a href="https://github.com/skip5this/LoopIn#setup" target="_blank" rel="noopener noreferrer" style="
+          display: block; text-align: center; padding: 8px 0; border-radius: 8px;
+          background: #9E96B8; color: #1a1a1a; text-decoration: none;
+          font-size: 12px; font-weight: 500; transition: all 0.15s ease;
+        ">View setup guide</a>
       </div>
     `;
 
     document.body.appendChild(panel);
 
-    // Check connection
     checkServerConnection();
-
     document.getElementById('loopin-settings-close').onclick = () => closeSettings();
-    document.getElementById('loopin-settings-save').onclick = () => {
-      const input = document.getElementById('loopin-server-input');
-      CAPTURE_SERVER = input.value.trim();
-      chrome.storage.sync.set({ serverUrl: CAPTURE_SERVER });
-      checkServerConnection();
-      showToast('Server URL saved', 'success');
-    };
   }
 
   async function checkServerConnection() {
-    const status = document.getElementById('loopin-server-status');
     const dot = document.getElementById('loopin-server-dot');
     const text = document.getElementById('loopin-server-status-text');
 
     try {
       const res = await serverFetch(`${CAPTURE_SERVER}/health`);
       if (res.ok) {
-        if (status) { status.classList.add('loopin-connected'); status.classList.remove('loopin-disconnected'); status.title = 'Connected'; }
         if (dot) { dot.classList.add('loopin-connected'); dot.classList.remove('loopin-disconnected'); }
         if (text) text.textContent = 'Connected';
       } else {
         throw new Error('Not ok');
       }
     } catch (e) {
-      if (status) { status.classList.add('loopin-disconnected'); status.classList.remove('loopin-connected'); status.title = 'Disconnected'; }
       if (dot) { dot.classList.add('loopin-disconnected'); dot.classList.remove('loopin-connected'); }
       if (text) text.textContent = 'Not connected';
     }
-  }
-
-  // ============================================
-  // Freeze Animations (Step 8)
-  // ============================================
-
-  function toggleFreezeAnimations() {
-    if (animationsFrozen) {
-      unfreezeAnimations();
-    } else {
-      freezeAnimations();
-    }
-    updateControlBar();
-  }
-
-  function freezeAnimations() {
-    animationsFrozen = true;
-
-    // Pause CSS animations and transitions
-    const style = document.createElement('style');
-    style.id = 'loopin-freeze-styles';
-    style.textContent = `
-      *, *::before, *::after {
-        animation-play-state: paused !important;
-        transition: none !important;
-      }
-    `;
-    document.head.appendChild(style);
-
-    // Pause all videos
-    document.querySelectorAll('video').forEach(v => {
-      if (!v.paused) {
-        v.dataset.loopinWasPlaying = 'true';
-        v.pause();
-      }
-    });
-
-    // Pause GIFs by replacing with canvas snapshot
-    // (Skip for now — complex and fragile)
-
-    showToast('Animations frozen', 'info');
-  }
-
-  function unfreezeAnimations() {
-    animationsFrozen = false;
-
-    const style = document.getElementById('loopin-freeze-styles');
-    if (style) style.remove();
-
-    // Resume videos
-    document.querySelectorAll('video[data-loopin-was-playing]').forEach(v => {
-      v.play();
-      delete v.dataset.loopinWasPlaying;
-    });
-
-    showToast('Animations resumed', 'info');
   }
 
   // ============================================
@@ -643,7 +545,7 @@
   }
 
   // ============================================
-  // Capture Dialog (Step 3 — MetaLab style)
+  // Capture Dialog (matching landing page demo)
   // ============================================
 
   function showDialog(element) {
@@ -666,41 +568,34 @@
       enrichmentHtml += `<span class="loopin-dialog-badge loopin-badge-context" title="Nearest heading"># ${escapeHtml(data.headingContext.text.slice(0, 40))}</span>`;
     }
 
+    // Video frame data
+    let videoFrameHtml = '';
+    const videoEl = element.tagName === 'VIDEO' ? element : element.closest('video');
+    if (videoEl) {
+      videoFrameHtml = `<span class="loopin-dialog-video-frame">▶ ${videoEl.currentTime.toFixed(1)}s / ${videoEl.duration.toFixed(1)}s</span>`;
+      // Also attach to data for capture
+      data.videoFrame = { currentTime: videoEl.currentTime, duration: videoEl.duration, paused: videoEl.paused };
+    }
+
     overlay.innerHTML = `
       <div class="loopin-dialog">
         <div class="loopin-dialog-header">
-          <div class="loopin-dialog-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-            </svg>
-            <span>LoopIn</span>
+          <div class="loopin-dialog-element-info" style="margin:0">
+            <div class="loopin-dialog-element-tag">${data.tagName}</div>
+            <div class="loopin-dialog-element-size">${data.boundingRect.width}×${data.boundingRect.height}</div>
+            ${videoFrameHtml}
           </div>
           <button class="loopin-dialog-close" id="loopin-dialog-close">×</button>
         </div>
         <div class="loopin-dialog-body">
-          <div class="loopin-dialog-element-info">
-            <div class="loopin-dialog-element-tag">&lt;${data.tagName}&gt;</div>
-            <div class="loopin-dialog-element-selector">${escapeHtml(data.selector)}</div>
-            <div class="loopin-dialog-element-size">${data.boundingRect.width} × ${data.boundingRect.height}px</div>
-          </div>
           ${enrichmentHtml ? `<div class="loopin-dialog-enrichment">${enrichmentHtml}</div>` : ''}
-          <button class="loopin-dialog-view-source" id="loopin-view-source">
-            <span class="loopin-chevron">▶</span> View source
-          </button>
-          <div class="loopin-dialog-preview" id="loopin-source-block" style="display:none">
-            <pre>${escapeHtml(htmlPreview)}</pre>
-          </div>
           <div class="loopin-dialog-input-wrap">
-            <textarea id="loopin-instruction" placeholder="What should change? e.g., make this bigger, fix the spacing, change the color..." rows="3"></textarea>
+            <textarea id="loopin-instruction" placeholder='Add context... "Make this green"' rows="3"></textarea>
           </div>
         </div>
         <div class="loopin-dialog-footer">
-          <button class="loopin-dialog-btn loopin-dialog-btn-ghost" id="loopin-capture-only">Capture only</button>
-          <button class="loopin-dialog-btn loopin-dialog-btn-primary" id="loopin-send">
-            Send
-            <span class="loopin-dialog-shortcut">⌘↵</span>
-          </button>
+          <button class="loopin-dialog-btn loopin-dialog-btn-ghost" id="loopin-capture-only">Capture</button>
+          <button class="loopin-dialog-btn loopin-dialog-btn-primary" id="loopin-send">Send</button>
         </div>
       </div>
     `;
@@ -709,15 +604,6 @@
 
     const textarea = overlay.querySelector('#loopin-instruction');
     setTimeout(() => textarea.focus(), 100);
-
-    // View source toggle
-    const viewSourceBtn = overlay.querySelector('#loopin-view-source');
-    const sourceBlock = overlay.querySelector('#loopin-source-block');
-    viewSourceBtn.onclick = () => {
-      const isHidden = sourceBlock.style.display === 'none';
-      sourceBlock.style.display = isHidden ? 'block' : 'none';
-      viewSourceBtn.classList.toggle('loopin-expanded', isHidden);
-    };
 
     overlay.querySelector('#loopin-dialog-close').onclick = () => overlay.remove();
 
@@ -736,7 +622,6 @@
       overlay.remove();
     };
 
-    // Close on escape
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
         overlay.remove();
@@ -745,12 +630,10 @@
     };
     document.addEventListener('keydown', handleEscape);
 
-    // Close on overlay click
     overlay.onclick = (e) => {
       if (e.target === overlay) overlay.remove();
     };
 
-    // Cmd+Enter to send
     textarea.onkeydown = (e) => {
       if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
         overlay.querySelector('#loopin-send').click();
@@ -862,7 +745,6 @@
   function getHeadingContext(el) {
     let node = el;
     while (node && node !== document.body) {
-      // Check previous siblings and parent for headings
       let sibling = node.previousElementSibling;
       while (sibling) {
         if (/^H[1-6]$/.test(sibling.tagName)) {
@@ -872,7 +754,6 @@
       }
       node = node.parentElement;
     }
-    // Fallback: find nearest heading in DOM
     const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
     let closest = null;
     let closestDist = Infinity;
@@ -893,7 +774,6 @@
 
   function getReactComponentHierarchy(el) {
     try {
-      // Check if React DevTools hook is available
       if (!window.__REACT_DEVTOOLS_GLOBAL_HOOK__) return null;
 
       const fiberKey = Object.keys(el).find(k => k.startsWith('__reactFiber$') || k.startsWith('__reactInternalInstance$'));
@@ -909,7 +789,6 @@
             components.unshift(name);
           }
         } else if (fiber.type && typeof fiber.type === 'object' && fiber.type.$$typeof) {
-          // Forward ref, memo, etc.
           const inner = fiber.type.render || fiber.type.type;
           if (inner) {
             const name = inner.displayName || inner.name;
@@ -945,7 +824,6 @@
       title: document.title
     };
 
-    // Enriched data
     const a11y = getAccessibilityData(el);
     if (a11y) data.accessibility = a11y;
 
@@ -1026,11 +904,12 @@
     if (e.target.closest('#loopin-control-bar') || 
         e.target.closest('.loopin-dialog-overlay') || 
         e.target.closest('.loopin-toast') ||
-        e.target.closest('.loopin-settings-panel')) {
+        e.target.closest('.loopin-settings-panel') ||
+        e.target.closest('.loopin-task-list-panel')) {
       return;
     }
 
-    // Skip full-page elements — selecting html/body is never useful
+    // Skip full-page elements
     const tag = e.target.tagName.toLowerCase();
     if (tag === 'html' || tag === 'body') return;
 
@@ -1057,7 +936,8 @@
     if (e.target.closest('#loopin-control-bar') || 
         e.target.closest('.loopin-dialog-overlay') || 
         e.target.closest('.loopin-toast') ||
-        e.target.closest('.loopin-settings-panel')) {
+        e.target.closest('.loopin-settings-panel') ||
+        e.target.closest('.loopin-task-list-panel')) {
       return;
     }
 
@@ -1071,16 +951,15 @@
   }
 
   function handleKeydown(e) {
-    // Toggle with Ctrl+Shift+C or Cmd+Shift+C
     if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'C') {
       e.preventDefault();
       toggle();
     }
 
-    // Escape to turn off (only if no dialog/settings open)
     if (e.key === 'Escape' && captureMode && 
         !document.querySelector('.loopin-dialog-overlay') &&
-        !document.querySelector('.loopin-settings-panel')) {
+        !document.querySelector('.loopin-settings-panel') &&
+        !document.querySelector('.loopin-task-list-panel')) {
       toggle();
     }
   }
@@ -1090,7 +969,6 @@
   // ============================================
 
   function enable() {
-    // Disable text select if active
     if (textSelectMode) disableTextSelect();
     captureMode = true;
     document.addEventListener('mouseover', handleMouseOver, true);
@@ -1144,9 +1022,6 @@
       CAPTURE_SERVER = message.serverUrl;
       sendResponse({ ok: true });
     }
-    
-    // (A11y mode removed — see feature/a11y-copilot branch)
-    
     return true;
   });
 
@@ -1156,14 +1031,12 @@
 
   document.addEventListener('keydown', handleKeydown);
 
-  // Create control bar when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', createControlBar);
   } else {
     createControlBar();
   }
 
-  // Expose for debugging
   window.__loopIn = {
     toggle,
     enable,

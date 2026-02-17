@@ -1,6 +1,7 @@
 /* ============================================
    LoopIn — MetaLab-Inspired UI
    Dark, premium, elegant
+   Accent: #9E96B8 (lavender)
    ============================================ */
 
 /* ============================================
@@ -29,10 +30,9 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: #0a0a0f;
+  background: #111116;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: none;
   cursor: pointer;
   color: rgba(255, 255, 255, 0.5);
   transition: all 0.15s ease;
@@ -59,34 +59,34 @@
   right: -4px;
   width: 18px;
   height: 18px;
-  background: #635bff;
+  background: #9E96B8;
   border-radius: 9px;
-  color: white;
+  color: #1a1a1a;
   font-size: 10px;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #0a0a0f;
+  border: 2px solid #111116;
 }
 
 /* Expanded state — the full bar */
 .loopin-bar-expanded {
   display: flex;
   align-items: center;
-  gap: 2px;
-  background: #111116 !important;
+  gap: 4px;
+  background: #111116;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  box-shadow: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   padding: 4px;
 }
 
 .loopin-bar-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 8px 12px;
+  padding: 8px;
   background: transparent;
   border: none;
   border-radius: 10px;
@@ -104,29 +104,22 @@
 }
 
 .loopin-bar-btn.loopin-active {
-  background: rgba(99, 91, 255, 0.15);
-  color: #a5b4fc;
+  background: rgba(158, 150, 184, 0.12);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .loopin-bar-btn.loopin-active:hover {
-  background: rgba(99, 91, 255, 0.25);
+  background: rgba(158, 150, 184, 0.18);
 }
 
-.loopin-bar-btn-minimize {
-  padding: 8px;
+.loopin-bar-btn-capture {
+  padding: 8px 12px;
 }
 
 .loopin-bar-label {
   font-size: 12px;
   font-weight: 500;
   letter-spacing: -0.01em;
-}
-
-.loopin-bar-divider {
-  width: 1px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.06);
-  margin: 0 2px;
 }
 
 /* Capture dot indicator */
@@ -140,29 +133,40 @@
 
 .loopin-capture-dot.loopin-active {
   background: #22c55e;
-  box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
-  animation: loopin-pulse 2s ease-in-out infinite;
 }
 
-@keyframes loopin-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+/* Tasks badge (inline) */
+.loopin-tasks-badge {
+  position: relative;
+  top: 0;
+  right: auto;
+  width: 16px;
+  height: 16px;
+  background: #9E96B8;
+  border-radius: 8px;
+  color: #1a1a1a;
+  font-size: 9px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
 }
 
 /* ============================================
-   Settings Panel
+   Settings Panel (Connect to MCP)
    ============================================ */
 
 .loopin-settings-panel {
   position: fixed;
-  bottom: 70px;
+  bottom: 76px;
   right: 20px;
   z-index: 2147483646;
   width: 300px;
-  background: #111116 !important;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8) !important;
+  background: #111116;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.06);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow: hidden;
   animation: loopin-panel-in 0.15s ease;
@@ -178,10 +182,17 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   color: #fafafa;
   font-size: 13px;
   font-weight: 500;
+}
+
+.loopin-settings-subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 400;
+  margin-top: 2px;
 }
 
 .loopin-settings-close {
@@ -218,11 +229,39 @@
   display: block;
 }
 
+.loopin-settings-description {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
 .loopin-settings-row {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 12px;
+}
+
+.loopin-settings-server-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+
+.loopin-settings-server-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+  font-family: 'SF Mono', Monaco, monospace;
+  margin-bottom: 6px;
+}
+
+.loopin-settings-server-url {
+  font-size: 13px;
+  color: #9E96B8;
+  font-family: 'SF Mono', Monaco, monospace;
 }
 
 .loopin-settings-input {
@@ -239,7 +278,7 @@
 }
 
 .loopin-settings-input:focus {
-  border-color: rgba(99, 91, 255, 0.4);
+  border-color: rgba(158, 150, 184, 0.4);
 }
 
 .loopin-settings-status {
@@ -258,15 +297,18 @@
 .loopin-settings-save {
   width: 100%;
   padding: 10px;
-  background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+  background: #9E96B8;
   border: none;
   border-radius: 10px;
-  color: white;
+  color: #1a1a1a;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.loopin-settings-save:hover {
+  background: #B0A9C8;
 }
 
 /* Connection status row */
@@ -302,13 +344,8 @@
   font-weight: 500;
 }
 
-.loopin-settings-save:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
 /* ============================================
-   Capture Dialog (MetaLab style)
+   Capture Dialog (inline floating panel)
    ============================================ */
 
 .loopin-dialog-overlay {
@@ -334,10 +371,10 @@
 .loopin-dialog {
   width: 480px;
   max-width: 90vw;
-  background: #0a0a0f;
-  border-radius: 16px;
-  border: 0.5px solid rgba(255, 255, 255, 0.1);
-  box-shadow: none;
+  background: #111116;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.06);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow: hidden;
   animation: loopin-dialog-in 0.15s ease;
@@ -352,8 +389,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: none;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .loopin-dialog-title {
@@ -366,17 +403,17 @@
 }
 
 .loopin-dialog-title svg {
-  color: #635bff;
+  color: #9E96B8;
 }
 
 .loopin-dialog-close {
   width: 28px;
   height: 28px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
-  border: none;
+  background: transparent;
+  border: 1px solid transparent;
   color: rgba(255, 255, 255, 0.4);
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -385,8 +422,8 @@
 }
 
 .loopin-dialog-close:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .loopin-dialog-body {
@@ -396,19 +433,20 @@
 .loopin-dialog-element-info {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 12px;
   flex-wrap: wrap;
 }
 
 .loopin-dialog-element-tag {
-  background: rgba(99, 91, 255, 0.15);
-  color: #a5b4fc;
-  padding: 4px 10px;
-  border-radius: 6px;
+  background: #9E96B8;
+  color: #1a1a1a;
+  padding: 2px 8px;
+  border-radius: 4px;
   font-family: 'SF Mono', Monaco, monospace;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .loopin-dialog-element-selector {
@@ -422,10 +460,15 @@
 }
 
 .loopin-dialog-element-size {
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.35);
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 12px;
+}
+
+.loopin-dialog-video-frame {
+  color: #9E96B8;
   font-family: 'SF Mono', Monaco, monospace;
   font-size: 11px;
-  margin-left: auto;
 }
 
 /* Enrichment badges */
@@ -520,7 +563,7 @@
 .loopin-dialog-input-wrap textarea {
   width: 100%;
   background: rgba(255, 255, 255, 0.04);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 10px;
   padding: 12px;
   color: #fafafa;
@@ -537,7 +580,7 @@
 }
 
 .loopin-dialog-input-wrap textarea:focus {
-  border-color: rgba(99, 91, 255, 0.4);
+  border-color: rgba(158, 150, 184, 0.4);
 }
 
 .loopin-dialog-footer {
@@ -545,8 +588,8 @@
   align-items: center;
   justify-content: flex-end;
   gap: 8px;
-  padding: 12px 20px;
-  border-top: none;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .loopin-dialog-btn {
@@ -561,32 +604,32 @@
 }
 
 .loopin-dialog-btn-ghost {
-  background: transparent;
-  color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .loopin-dialog-btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.7);
 }
 
 .loopin-dialog-btn-primary {
-  background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
-  color: white;
+  background: #9E96B8;
+  color: #1a1a1a;
   display: flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  font-weight: 600;
 }
 
 .loopin-dialog-btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background: #B0A9C8;
 }
 
 .loopin-dialog-shortcut {
   font-size: 10px;
-  opacity: 0.6;
+  opacity: 0.5;
   font-family: -apple-system, sans-serif;
 }
 
@@ -595,7 +638,7 @@
    ============================================ */
 
 .loopin-highlight {
-  outline: 2px solid rgba(99, 91, 255, 0.7) !important;
+  outline: 2px solid rgba(158, 150, 184, 0.7) !important;
   outline-offset: 2px !important;
   cursor: crosshair !important;
   transition: outline-color 0.1s ease;
@@ -607,14 +650,13 @@
 
 .loopin-toast {
   position: fixed;
-  bottom: 70px;
+  bottom: 76px;
   right: 24px;
   z-index: 2147483647;
   padding: 10px 16px;
-  background: #0a0a0f;
-  border: none;
+  background: #111116;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 10px;
-  box-shadow: none;
   color: rgba(255, 255, 255, 0.7);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 12px;
@@ -624,12 +666,10 @@
 }
 
 .loopin-toast-success {
-  border-color: rgba(34, 197, 94, 0.2);
   color: #86efac;
 }
 
 .loopin-toast-error {
-  border-color: rgba(239, 68, 68, 0.2);
   color: #fca5a5;
 }
 
@@ -644,15 +684,15 @@
 
 .loopin-task-list-panel {
   position: fixed;
-  bottom: 70px;
+  bottom: 76px;
   right: 20px;
   z-index: 2147483646;
-  width: 340px;
+  width: 280px;
   max-height: 400px;
-  background: #111116 !important;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8) !important;
+  background: #111116;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.06);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow: hidden;
   animation: loopin-panel-in 0.15s ease;
@@ -662,7 +702,7 @@
 
 .loopin-task-list-body {
   overflow-y: auto;
-  padding: 8px;
+  padding: 8px 16px 12px;
   flex: 1;
 }
 
@@ -676,30 +716,28 @@
 
 .loopin-task-item {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  transition: background 0.1s ease;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.loopin-task-item:hover {
-  background: rgba(255, 255, 255, 0.04);
+.loopin-task-item:last-child {
+  border-bottom: none;
 }
 
 .loopin-task-icon {
   width: 24px;
   height: 24px;
   border-radius: 6px;
-  background: rgba(99, 91, 255, 0.12);
-  color: #a5b4fc;
+  background: rgba(158, 150, 184, 0.12);
+  color: #9E96B8;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 11px;
   font-weight: 600;
   flex-shrink: 0;
-  margin-top: 1px;
 }
 
 .loopin-task-content {
@@ -730,22 +768,20 @@
   color: rgba(255, 255, 255, 0.2);
   font-size: 10px;
   flex-shrink: 0;
-  margin-top: 3px;
 }
 
-.loopin-tasks-badge {
-  position: relative;
-  top: -2px;
-  right: auto;
-  width: 16px;
-  height: 16px;
-  background: #635bff;
-  border-radius: 8px;
-  color: white;
-  font-size: 9px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.loopin-task-send-all {
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: #9E96B8;
   border: none;
+  color: #1a1a1a;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.loopin-task-send-all:hover {
+  background: #B0A9C8;
 }
