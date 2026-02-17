@@ -1030,6 +1030,10 @@
       return;
     }
 
+    // Skip full-page elements — selecting html/body is never useful
+    const tag = e.target.tagName.toLowerCase();
+    if (tag === 'html' || tag === 'body') return;
+
     if (hoveredElement) {
       hoveredElement.classList.remove('loopin-highlight');
     }
