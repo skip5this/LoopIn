@@ -1,50 +1,46 @@
-# Privacy Policy — LoopIn
+# LoopIn — Privacy Policy
 
-**Last updated:** February 16, 2026
+*Last updated: February 18, 2026*
 
 ## What LoopIn Does
 
-LoopIn is a Chrome extension that lets you capture UI elements and text from web pages to send to your local development server. It bridges what you see in the browser with your AI coding tools.
+LoopIn is a browser extension that lets you capture UI elements from web pages and send them to a local AI coding agent via MCP (Model Context Protocol).
 
 ## Data Collection
 
 **LoopIn does not collect, store, or transmit any personal data.**
 
-### What data is captured
+### What LoopIn captures (only when you activate it):
+- HTML structure of selected elements
+- Computed CSS styles of selected elements  
+- Page URL and title (for context)
+- Accessibility attributes of selected elements
 
-When you actively click an element or select text in capture mode, LoopIn reads:
-- The HTML, CSS, and accessibility attributes of that specific element
-- The page URL and title
-- Any React component hierarchy (if present)
+### Where that data goes:
+- **Only to your local machine.** Captured data is sent to a local MCP server running on `localhost:3456`. It never leaves your computer unless your local AI agent sends it somewhere as part of its own operation.
 
-### Where data goes
-
-All captured data is sent **only to your local server** (default: `localhost:3456`). The server URL is configurable and always visible in LoopIn's settings panel.
-
-**No data is ever sent to any external server, cloud service, or third party.**
-
-### Storage
-
-LoopIn stores only:
-- Your server URL preference (via `chrome.storage.sync`)
-- Control bar collapsed/expanded state (via `chrome.storage.sync`)
-
-No browsing history, cookies, passwords, form data, or personal information is stored or accessed.
+### What LoopIn does NOT do:
+- Does not collect analytics or usage data
+- Does not use cookies or tracking
+- Does not transmit data to any remote server
+- Does not store captured data persistently
+- Does not access data on pages you haven't actively captured from
+- Does not run in the background when not activated
 
 ## Permissions
 
-- **activeTab:** Required to inject the capture overlay into the current page
-- **scripting:** Required to run the content script for element inspection
-- **storage:** Required to save your server URL preference
+- **activeTab**: To access the current tab's content when you activate capture mode
+- **scripting**: To inject the capture overlay UI into the current page
+- **storage**: To save your preferences (like keyboard shortcut settings)
 
 ## Third Parties
 
-LoopIn has no analytics, no tracking, no telemetry, and no third-party integrations. It communicates only with the local server you configure.
+LoopIn has no third-party dependencies that collect data. There are no analytics, ads, or tracking services.
 
-## Open Source
+## Changes
 
-LoopIn's source code is publicly available at [github.com/skip5this/browser-bridge](https://github.com/skip5this/browser-bridge).
+If this policy changes, we'll update this document and the "last updated" date above.
 
 ## Contact
 
-Questions? Reach out at [skb.rene@gmail.com](mailto:skb.rene@gmail.com).
+Questions? Open an issue at [github.com/skip5this/loopin](https://github.com/skip5this/loopin) or email scott.k.bell@gmail.com.
