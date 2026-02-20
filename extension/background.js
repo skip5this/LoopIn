@@ -78,23 +78,39 @@ chrome.commands?.onCommand?.addListener(async (command) => {
   if (command === 'toggle-capture') {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (tab?.id) {
-      try {
-        await chrome.tabs.sendMessage(tab.id, { type: 'toggle' });
-      } catch (e) {
-        console.log('Could not toggle capture mode:', e);
-      }
+      await ensureContentScriptAndToggle(tab.id);
     }
   }
 });
 
+// Inject content script if not already present, then toggle
+async function ensureContentScriptAndToggle(tabId) {
+  try {
+    // Try sending toggle — if content script is loaded, this works
+    await chrome.tabs.sendMessage(tabId, { type: 'toggle' });
+  } catch (e) {
+    // Content script not injected yet — inject it now
+    try {
+      await chrome.scripting.insertCSS({ target: { tabId }, files: ['content.css'] });
+      await chrome.scripting.executeScript({ target: { tabId }, files: ['content.js'] });
+      // Small delay to let it initialize, then toggle on
+      setTimeout(async () => {
+        try {
+          await chrome.tabs.sendMessage(tabId, { type: 'toggle' });
+        } catch (err) {
+          console.log('Could not toggle after injection:', err);
+        }
+      }, 100);
+    } catch (injectErr) {
+      console.log('Could not inject content script:', injectErr);
+    }
+  }
+}
+
 // Clicking the extension icon toggles capture mode (no popup)
 chrome.action.onClicked.addListener(async (tab) => {
   if (tab?.id) {
-    try {
-      await chrome.tabs.sendMessage(tab.id, { type: 'toggle' });
-    } catch (e) {
-      console.log('Could not toggle capture mode:', e);
-    }
+    await ensureContentScriptAndToggle(tab.id);
   }
 });
 
