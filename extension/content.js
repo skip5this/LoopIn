@@ -413,7 +413,7 @@
           const icon = c.type === 'text' ? 'T' : '◻';
           const label = c.type === 'text'
             ? `"${escapeHtml((c.text || '').slice(0, 50))}${(c.text || '').length > 50 ? '...' : ''}"`
-            : `<${escapeHtml(c.tagName || 'element')}>`;
+            : `&lt;${escapeHtml(c.tagName || 'element')}&gt;`;
           return `
             <div class="loopin-task-item">
               <span class="loopin-task-icon">${icon}</span>
